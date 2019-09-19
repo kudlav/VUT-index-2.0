@@ -25,11 +25,13 @@
 
         <activity
             android:name="prvnimilion.vutindex.auth.view.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <activity
             android:name="prvnimilion.vutindex.home.view.HomeActivity"
             android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
     </application>

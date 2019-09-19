@@ -45,11 +45,12 @@ class SystemFragment : Fragment() {
     private fun showWebPage() {
         webview.settings.apply {
             javaScriptEnabled = true
-            databaseEnabled = true
             setAppCacheEnabled(true)
-            domStorageEnabled = true
             builtInZoomControls = true
             displayZoomControls = false
+            domStorageEnabled = true
+            databaseEnabled = true
+            javaScriptCanOpenWindowsAutomatically = truegít
         }
         webview.setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
@@ -88,7 +89,7 @@ class SystemFragment : Fragment() {
 
                         loadingPanel.visibility = View.GONE
                         setClickable(true)
-                        isStoragePermissionGranted()
+                        //isStoragePermissionGranted()
                     }
                 }
 
