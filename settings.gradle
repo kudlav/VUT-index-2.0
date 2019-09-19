@@ -1,0 +1,2 @@
+include ':app', ':database', ':repository', ':webscraper', ':ui_common', ':index'
+rootProject.name='VutIndexKotlin'
