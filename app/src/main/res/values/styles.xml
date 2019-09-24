@@ -31,28 +31,19 @@
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="TextAppearance.VutIndex.Basic.Medium" parent="TextAppearance.VutIndex">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
     <style name="TextAppearance.VutIndex.Basic.Bold" parent="TextAppearance.VutIndex">
         <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.VutIndex.Menu.Bold" parent="TextAppearance.VutIndex">
+        <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.VutIndex.Title" parent="TextAppearance.VutIndex">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextAppearance.VutIndex.Headline" parent="TextAppearance.VutIndex">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextAppearance.VutIndex.Label.Grey" parent="TextAppearance.VutIndex.Label">
-        <item name="android:textColor">@color/textGrey</item>
     </style>
 
     <style name="TextAppearance.VutIndex.Label.Bold" parent="TextAppearance.VutIndex.Label">
@@ -78,7 +69,7 @@
         <item name="android:visibility">invisible</item>
         <item name="cornerRadius">24dp</item>
         <item name="android:clickable">false</item>
-        <item name="android:textAppearance">@style/TextAppearance.VutIndex.Basic.Bold</item>
+        <item name="android:textAppearance">@style/TextAppearance.VutIndex.Menu.Bold</item>
     </style>
     <!--End: Button styles-->
 

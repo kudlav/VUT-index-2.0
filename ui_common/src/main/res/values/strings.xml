@@ -1,17 +1,8 @@
 <resources>
-    <string name="app_name">VUT Index</string>
 
     <!-- Login -->
-    <string name="login.username.field.hint">Vut login nebo osobní číslo</string>
-    <string name="login.password.field.hint">Vut heslo</string>
-    <string name="login.remember.credentials.checkbox">Zapamatovat přihlašovací údaje</string>
-    <string name="login.privacy.policy">Zásady používání dat</string>
-    <string name="login.button.caption">Přihlásit se</string>
 
     <!-- Home -->
-    <string name="index.tabbar.title">Index</string>
-    <string name="menu.tabbar.title">Menu</string>
-    <string name="system.tabbar.title">Systém</string>
 
 
 </resources>

@@ -39,6 +39,7 @@ dependencies {
     implementation "android.arch.paging:runtime:$paging_version"
     implementation "com.android.support:cardview-v7:$cardview_version"
 
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$androidx_swipe_refresh_version"
     implementation "com.google.android.material:material:$androidx_material"
 
     implementation "org.koin:koin-android-scope:$koin_version"

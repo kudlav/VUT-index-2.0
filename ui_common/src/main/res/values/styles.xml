@@ -1,85 +1,15 @@
 <resources>
 
     <!-- Start: Themes -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorAccent">@color/colorPrimary</item>
-
-        <item name="android:statusBarColor">@android:color/white</item>
-        <item name="android:windowLightStatusBar">true</item>
-
-        <item name="android:fontFamily">@font/cabin_font_family</item>
-        <item name="fontFamily">@font/cabin_font_family</item>
-
-        <item name="colorOnSecondary">@color/textGeneralWhite</item>
-
-        <item name="android:actionMenuTextAppearance">@style/TextAppearance.VutIndex.Title</item>
-
-        <item name="android:splitMotionEvents">false</item>
-    </style>
     <!-- End: Themes -->
 
     <!--Start: Text styles-->
-    <style name="TextAppearance.VutIndex" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textColor">@color/textPrimary</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="TextAppearance.VutIndex.Label" parent="TextAppearance.VutIndex">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="TextAppearance.VutIndex.Basic.Medium" parent="TextAppearance.VutIndex">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="TextAppearance.VutIndex.Basic.Bold" parent="TextAppearance.VutIndex">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextAppearance.VutIndex.Title" parent="TextAppearance.VutIndex">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextAppearance.VutIndex.Headline" parent="TextAppearance.VutIndex">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextAppearance.VutIndex.Label.Grey" parent="TextAppearance.VutIndex.Label">
-        <item name="android:textColor">@color/textGrey</item>
-    </style>
-
-    <style name="TextAppearance.VutIndex.Label.Bold" parent="TextAppearance.VutIndex.Label">
-        <item name="android:textStyle">bold</item>
-    </style>
 
     <!--End: Text styles-->
 
 
     <!--Start: Button styles-->
-    <style name="Widget.MaterialComponents.Button.Rounded" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="cornerRadius">30dp</item>
-        <item name="android:layout_width">200dp</item>
-        <item name="android:layout_height">56dp</item>
-        <item name="android:insetLeft">4dp</item>
-        <item name="android:insetRight">4dp</item>
 
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Widget.MaterialComponents.Button.Navigation" parent="Widget.MaterialComponents.Button.UnelevatedButton.Icon">
-        <item name="android:visibility">invisible</item>
-        <item name="cornerRadius">24dp</item>
-        <item name="android:clickable">false</item>
-        <item name="android:textAppearance">@style/TextAppearance.VutIndex.Basic.Bold</item>
-    </style>
     <!--End: Button styles-->
 
 </resources>

@@ -1,7 +1,7 @@
 package prvnimilion.vutindex.ui_common.models
 
 data class Subject(
-    val id: Int,
+    val semesterId: Int,
     val fullName: String,
     val shortName: String,
     val type: String,

@@ -1,177 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/spacing_1"
-    android:layout_marginEnd="@dimen/spacing_1">
+    android:layout_marginEnd="@dimen/spacing_1"
+    android:layout_marginBottom="@dimen/spacing_1"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp">
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/spacing_1"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="0dp">
+        android:paddingBottom="@dimen/spacing_1">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/spacing_1">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/short_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_2"
+            android:layout_marginTop="@dimen/spacing_2"
+            android:textAppearance="@style/TextAppearance.VutIndex.Basic.Bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="BMOD" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/short_name"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/full_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_2"
+            android:textAppearance="@style/TextAppearance.VutIndex.Label"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/short_name"
+            tools:text="Modelování a Simulace" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_2"
+            android:layout_marginTop="@dimen/spacing_tiny_4dp"
+            android:textAppearance="@style/TextAppearance.VutIndex.Label"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/full_name"
+            tools:text="Skupina: P" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/completion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_2"
+            android:textAppearance="@style/TextAppearance.VutIndex.Label"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/type"
+            tools:text="Ukončení: Zá,zk" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/credits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_2"
+            android:textAppearance="@style/TextAppearance.VutIndex.Label"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/completion"
+            tools:text="Kredity: 6" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/term_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_3"
+            android:layout_marginEnd="17dp"
+            android:textAppearance="@style/TextAppearance.VutIndex.Label"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/credit_given_wrapper"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="Termín: 1." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/credit_given_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zápočet: "
+            android:textAppearance="@style/TextAppearance.VutIndex.Label"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/credit_given_wrapper"
+            app:layout_constraintRight_toLeftOf="@id/credit_given_wrapper"
+            app:layout_constraintTop_toTopOf="@id/credit_given_wrapper" />
+
+        <RelativeLayout
+            android:id="@+id/credit_given_wrapper"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="14dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/credits"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/credit_given"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_2"
-                android:layout_marginTop="@dimen/spacing_2"
-                android:textAppearance="@style/TextAppearance.VutIndex.Basic.Bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="BMOD" />
+                android:layout_marginStart="-5dp"
+                android:clickable="false"
+                android:scaleX="0.75"
+                android:scaleY="0.75" />
+        </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/full_name"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/show_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_2"
+            android:layout_marginEnd="@dimen/spacing_2"
+            android:src="@drawable/ic_expand_more_black_24dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_2"
+            android:layout_marginEnd="@dimen/spacing_2"
+            android:layout_marginBottom="@dimen/spacing_1"
+            android:max="100"
+            android:paddingTop="@dimen/spacing_2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/points"
+            app:layout_constraintTop_toBottomOf="@id/credits" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/passed_wrapper"
+            tools:text="100/100" />
+
+        <RelativeLayout
+            android:id="@+id/passed_wrapper"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/passed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_2"
-                android:textAppearance="@style/TextAppearance.VutIndex.Label"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/short_name"
-                tools:text="Modelování a Simulace" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_2"
-                android:layout_marginTop="@dimen/spacing_tiny_4dp"
-                android:textAppearance="@style/TextAppearance.VutIndex.Label"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/full_name"
-                tools:text="Skupina: P" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/completion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_2"
-                android:textAppearance="@style/TextAppearance.VutIndex.Label"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/type"
-                tools:text="Ukončení: Zá,zk" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/credits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_2"
-                android:textAppearance="@style/TextAppearance.VutIndex.Label"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/completion"
-                tools:text="Kredity: 6" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/term_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="17dp"
-                android:layout_marginTop="@dimen/spacing_3"
-                android:textAppearance="@style/TextAppearance.VutIndex.Label"
-                android:visibility="gone"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/credit_given_wrapper"
-                tools:text="Termín: 1." />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/credit_given_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.VutIndex.Label"
-                android:visibility="gone"
-                app:layout_constraintRight_toLeftOf="@id/credit_given_wrapper"
-                app:layout_constraintTop_toTopOf="@id/credit_given_wrapper"
-                app:layout_constraintBottom_toBottomOf="@id/credit_given_wrapper"
-                android:text="Zápočet: " />
-
-            <RelativeLayout
-                android:id="@+id/credit_given_wrapper"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:visibility="gone"
-                android:layout_marginEnd="14dp"
-                app:layout_constraintBottom_toBottomOf="@id/credits"
-                app:layout_constraintRight_toRightOf="parent">
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/credit_given"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    android:scaleX="0.75"
-                    android:scaleY="0.75"
-                    android:layout_marginStart="-5dp"
-                    />
-            </RelativeLayout>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/show_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_2"
-                android:layout_marginEnd="@dimen/spacing_2"
-                android:src="@drawable/ic_expand_more_black_24dp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginStart="-5dp"
+                android:clickable="false"
+                android:scaleX="0.75"
+                android:scaleY="0.75" />
+        </RelativeLayout>
 
 
-            <androidx.core.widget.ContentLoadingProgressBar
-                android:id="@+id/progress_bar"
-                style="@android:style/Widget.Material.ProgressBar.Horizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_2"
-                android:layout_marginEnd="@dimen/spacing_2"
-                android:layout_marginBottom="@dimen/spacing_1"
-                android:max="100"
-                android:paddingTop="@dimen/spacing_2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/points"
-                app:layout_constraintTop_toBottomOf="@id/credits" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/points"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/passed_wrapper"
-                tools:text="100/100" />
-
-            <RelativeLayout
-                android:id="@+id/passed_wrapper"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="14dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/passed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    android:scaleX="0.75"
-                    android:scaleY="0.75"
-                    android:layout_marginStart="-5dp"
-                    />
-            </RelativeLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

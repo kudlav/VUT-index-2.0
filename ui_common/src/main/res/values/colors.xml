@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E4002B</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorSecondary">#FFF000</color>
-
-    <color name="colorAccent">#D81B60</color>
-
-    <color name="textPrimary">#00151D</color>
-    <color name="textGeneralWhite">#FFFFFF</color>
-    <color name="textGrey">#969EA2</color>
-
-    <color name="greyBackground">#FAFAFA</color>
-    <color name="colorTransparent">#00000000</color>
-
-
-    <color name="tabbarIndexColor">#E4002B</color>
-    <color name="tabbarMenuColor">#00A64F</color>
-    <color name="tabbarSystemColor">#286ECE</color>
 
 </resources>

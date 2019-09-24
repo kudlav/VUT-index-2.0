@@ -25,7 +25,6 @@ class PreferenceProvider(context: Context) {
         } else {
             encryptedSharedPreferences.edit().remove(USERNAME_KEY).apply()
         }
-
     }
 
     fun getUserName(): String? {
@@ -38,11 +37,15 @@ class PreferenceProvider(context: Context) {
         } else {
             encryptedSharedPreferences.edit().remove(PASSWORD_KEY).apply()
         }
-
     }
 
     fun getPassword(): String? {
         return encryptedSharedPreferences.getString(PASSWORD_KEY, null)
+    }
+
+    fun removeCredentials() {
+        encryptedSharedPreferences.edit().putString(USERNAME_KEY, null).apply()
+        encryptedSharedPreferences.edit().putString(PASSWORD_KEY, null).apply()
     }
 }
 

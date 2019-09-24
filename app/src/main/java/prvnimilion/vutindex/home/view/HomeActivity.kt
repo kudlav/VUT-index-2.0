@@ -3,25 +3,59 @@ package prvnimilion.vutindex.home.view
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
-import androidx.fragment.app.Fragment
+import android.webkit.WebView
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.home_screen.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import prvnimilion.vutindex.BaseActivity
 import prvnimilion.vutindex.R
-import prvnimilion.vutindex.home.viewmodel.HomeNavViewModel
-import prvnimilion.vutindex.indexf.index.view.IndexFragment
+import prvnimilion.vutindex.auth.view.LoginActivity
+import prvnimilion.vutindex.auth.viewmodel.LoginViewModel
+import prvnimilion.vutindex.home.HomePagerAdapter
+import prvnimilion.vutindex.home.viewmodel.HomeViewModel
+import prvnimilion.vutindex.index.adapters.IndexAdapter
+import prvnimilion.vutindex.index.viewmodel.IndexViewModel
+import prvnimilion.vutindex.menu.viewmodel.MenuViewModel
+import prvnimilion.vutindex.repository.util.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE
+import prvnimilion.vutindex.repository.util.PermissionsUtil.hasStorageWritePermissions
+import prvnimilion.vutindex.repository.util.PermissionsUtil.isStorageWritePermissionGranted
+import prvnimilion.vutindex.repository.util.PermissionsUtil.requestStorageWritePermission
+import prvnimilion.vutindex.system.viewmodel.SystemViewModel
 import timber.log.Timber
 
 class HomeActivity : BaseActivity() {
 
-    private val homeNavViewModel : HomeNavViewModel by viewModel()
+    private val indexViewModel: IndexViewModel by viewModel()
+    private val menuViewModel: MenuViewModel by viewModel()
+    private val systemViewModel: SystemViewModel by viewModel()
+    private val loginViewModel: LoginViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by viewModel()
 
     private var shortAnimationDuration: Int = 0
     private var longAnimationDuration: Int = 0
     private var viewDisplacementDistance: Float = -50f
+
+    private lateinit var indexView: View
+    private lateinit var menuView: View
+    private lateinit var systemView: View
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,161 +63,156 @@ class HomeActivity : BaseActivity() {
 
         shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         longAnimationDuration = shortAnimationDuration * 2
+
+        setupTabLayout()
+        setupTabClickListeners()
+
+        showIndexTab()
+        showMenuTab()
+        showSystemTab()
+
+        setupIndexWorker()
+
+        home_tab_layout.selectTab(home_tab_layout.getTabAt(0))
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun showIndexTab() {
+        val recyclerView = indexView.findViewById<RecyclerView>(R.id.index_recycler_view)
+        val progressBar = indexView.findViewById<View>(R.id.index_feed_progress_bar)
 
-        when (homeNavViewModel.currentFragment) {
-            HomeNavViewModel.INDEX_FRAGMENT -> {
-                startFragment(
-                    index_idle,
-                    index_selected,
-                    IndexFragment(),
-                    homeNavViewModel.currentFragment
-                )
+        progressBar.bringToFront()
+        progressBar.visibility = View.VISIBLE
+
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@HomeActivity)
+        }
+        indexViewModel.getIndex()
+        indexViewModel.dataSet.observe(this, Observer {
+            if (it == null) return@Observer
+
+            if (recyclerView.adapter == null) {
+                recyclerView.adapter = IndexAdapter(this, it)
+                progressBar.visibility = View.GONE
+
+            } else {
+                recyclerView.adapter?.notifyDataSetChanged()
+                indexView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).isRefreshing =
+                    false
             }
-            HomeNavViewModel.MENU_FRAGMENT -> {
-                startFragment(
-                    menu_idle,
-                    menu_selected,
-                    MenuFragment(),
-                    homeNavViewModel.currentFragment
-                )
-            }
-            HomeNavViewModel.SYSTEM_FRAGMENT -> {
-                startFragment(
-                    system_idle,
-                    system_selected,
-                    SystemFragment(),
-                    homeNavViewModel.currentFragment
-                )
-            }
+
+        })
+        indexView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).setOnRefreshListener {
+            indexViewModel.getIndex(true)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun showMenuTab() {
+        menuView.findViewById<TextView>(R.id.logout_button).setOnClickListener {
+            menuViewModel.logoutUser()
+        }
 
-        changeInteractions(isClickable = true)
+        menuViewModel.userLoggedOut.observe(this, Observer {
+            if (it) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
+    }
 
-        index_idle.setOnClickListener {
-            cancelAllSelected()
+    private fun showSystemTab() {
+        val webView = systemView.findViewById<WebView>(R.id.system_webview)
+        val loadingSpinner = systemView.findViewById<View>(R.id.loadingPanel)
 
-            hideCurrentFragment(homeNavViewModel.currentFragment)
-            crossfade(index_idle, index_selected) {
-                if (supportFragmentManager.findFragmentByTag(HomeNavViewModel.INDEX_FRAGMENT)?.isAdded == true) {
-                    Timber.tag("__").d("show INDEX")
-                    supportFragmentManager.beginTransaction()
-                        .show(supportFragmentManager.findFragmentByTag(HomeNavViewModel.INDEX_FRAGMENT)!!)
-                        .commitAllowingStateLoss()
-                } else {
-                    Timber.tag("__").d("add INDEX")
-                    supportFragmentManager.beginTransaction()
-                        .add(
-                            R.id.fragment_container,
-                            IndexFragment(),
-                            HomeNavViewModel.INDEX_FRAGMENT
-                        )
-                        .commitAllowingStateLoss()
+        loadingSpinner.bringToFront()
+        loadingSpinner.visibility = View.VISIBLE
+
+        systemViewModel.setupWebViewClient(webView) {
+            loadingSpinner.visibility = View.GONE
+            systemView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).isRefreshing = false
+        }
+        systemViewModel.setupChromeWebClient(webView)
+
+        val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        systemViewModel.setupDownloadListener(webView, downloadManager) {
+            if (hasStorageWritePermissions(this)) {
+                true
+            } else {
+                requestStorageWritePermission(this)
+                false
+            }
+        }
+        systemViewModel.getCookies(webView)
+        systemViewModel.getLoginCredentials()
+        systemViewModel.loginCredentials.observe(this, Observer {
+            systemViewModel.loginIntoSystem(webView)
+        })
+
+        systemView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).setOnRefreshListener {
+            webView.reload()
+        }
+    }
+
+
+    @SuppressLint("InflateParams")
+    private fun setupTabLayout() {
+        indexView = LayoutInflater.from(this).inflate(R.layout.index_fragment, null)
+        menuView = LayoutInflater.from(this).inflate(R.layout.menu_fragment, null)
+        systemView = LayoutInflater.from(this).inflate(R.layout.system_fragment, null)
+
+        val views: MutableList<View> = mutableListOf(indexView, menuView, systemView)
+        val names: MutableList<String> = mutableListOf(
+            getString(R.string.index_tabbar_title),
+            getString(R.string.menu_tabbar_title),
+            getString(R.string.system_tabbar_title)
+        )
+        val icons: MutableList<Int> = mutableListOf(
+            R.drawable.ic_school_white_24dp,
+            R.drawable.ic_menu_white_24dp,
+            R.drawable.ic_cloud_white_24dp
+        )
+        val colors: MutableList<Int> = mutableListOf(
+            R.color.tabbarIndexColor,
+            R.color.tabbarMenuColor,
+            R.color.tabbarSystemColor
+        )
+
+        val homePagerAdapter = HomePagerAdapter(this, views, names, icons, colors)
+        home_view_pager.adapter = homePagerAdapter
+        home_view_pager.offscreenPageLimit = 3
+        home_tab_layout.setupWithViewPager(home_view_pager)
+
+        for (i in 0 until home_tab_layout.tabCount) {
+            val tab = home_tab_layout.getTabAt(i)
+            tab?.customView = homePagerAdapter.getTabView(i)
+        }
+    }
+
+    private fun setupTabClickListeners() {
+        home_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                if (!homeViewModel.tabLayoutInitialized) {
+                    cancelAllSelected()
+                    val idle = tab?.customView?.findViewById<View>(R.id.tab_button_idle)!!
+                    val active = tab.customView?.findViewById<View>(R.id.tab_button_active)!!
+                    crossfade(idle, active)
+                    homeViewModel.tabLayoutInitialized = true
                 }
             }
-            homeNavViewModel.updateCurrentFragment(HomeNavViewModel.INDEX_FRAGMENT)
-        }
 
-        menu_idle.setOnClickListener {
-            cancelAllSelected()
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
-            hideCurrentFragment(homeNavViewModel.currentFragment)
-            crossfade(menu_idle, menu_selected) {
-                if (supportFragmentManager.findFragmentByTag(HomeNavViewModel.MENU_FRAGMENT)?.isAdded == true) {
-                    Timber.tag("__").d("show MENU")
-                    supportFragmentManager.beginTransaction()
-                        .show(supportFragmentManager.findFragmentByTag(HomeNavViewModel.MENU_FRAGMENT)!!)
-                        .commitAllowingStateLoss()
-                } else {
-                    Timber.tag("__").d("add MENU")
-                    supportFragmentManager.beginTransaction()
-                        .add(
-                            R.id.fragment_container,
-                            MenuFragment(),
-                            HomeNavViewModel.MENU_FRAGMENT
-                        )
-                        .commitAllowingStateLoss()
-                }
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                cancelAllSelected()
+                val idle = tab?.customView?.findViewById<View>(R.id.tab_button_idle)!!
+                val active = tab.customView?.findViewById<View>(R.id.tab_button_active)!!
+                crossfade(idle, active)
             }
-            homeNavViewModel.updateCurrentFragment(HomeNavViewModel.MENU_FRAGMENT)
-        }
 
-        system_idle.setOnClickListener {
-            cancelAllSelected()
-
-            hideCurrentFragment(homeNavViewModel.currentFragment)
-            crossfade(system_idle, system_selected) {
-                if (supportFragmentManager.findFragmentByTag(HomeNavViewModel.SYSTEM_FRAGMENT)?.isAdded == true) {
-                    Timber.tag("__").d("show STORE")
-                    supportFragmentManager.beginTransaction()
-                        .show(supportFragmentManager.findFragmentByTag(HomeNavViewModel.SYSTEM_FRAGMENT)!!)
-                        .commitAllowingStateLoss()
-                } else {
-                    Timber.tag("__").d("add STORE")
-                    supportFragmentManager.beginTransaction()
-                        .add(
-                            R.id.fragment_container,
-                            SystemFragment(),
-                            HomeNavViewModel.SYSTEM_FRAGMENT
-                        )
-                        .commitAllowingStateLoss()
-                }
-            }
-            homeNavViewModel.updateCurrentFragment(HomeNavViewModel.SYSTEM_FRAGMENT)
-        }
+        })
     }
 
-    private fun startFragment(idle: View, selected: View, fragment: Fragment, tag: String) {
-        cancelAllSelected()
-        idle.visibility = View.INVISIBLE
-        selected.visibility = View.VISIBLE
-
-        Timber.tag("__").d("add $tag")
-        supportFragmentManager.beginTransaction().add(
-            R.id.fragment_container,
-            fragment,
-            tag
-        ).commitAllowingStateLoss()
-    }
-
-    private fun changeInteractions(isClickable: Boolean) {
-        index_idle.isClickable = isClickable
-        menu_idle.isClickable = isClickable
-        system_idle.isClickable = isClickable
-    }
-
-    private fun cancelAllSelected() {
-        menu_selected.visibility = View.INVISIBLE
-        index_selected.visibility = View.INVISIBLE
-        system_selected.visibility = View.INVISIBLE
-
-        menu_idle.apply {
-            alpha = 1f
-            visibility = View.VISIBLE
-        }
-
-        index_idle.apply {
-            alpha = 1f
-            visibility = View.VISIBLE
-        }
-
-        system_idle.apply {
-            alpha = 1f
-            visibility = View.VISIBLE
-        }
-    }
-
-    private fun crossfade(current: View, next: View, startFragment: () -> Unit) {
-
-        changeInteractions(isClickable = false)
-
+    private fun crossfade(current: View, next: View) {
         ObjectAnimator.ofFloat(current, "translationX", viewDisplacementDistance).apply {
             interpolator = LinearOutSlowInInterpolator()
             duration = shortAnimationDuration.toLong()
@@ -205,37 +234,64 @@ class HomeActivity : BaseActivity() {
             alpha = 0f
             visibility = View.VISIBLE
 
-            animate()
-                .alpha(1f)
-                .setDuration(longAnimationDuration.toLong())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        startFragment()
+            animate().alpha(1f).duration = longAnimationDuration.toLong()
 
-                        changeInteractions(isClickable = true)
-                    }
-                })
         }
     }
 
-    private fun hideCurrentFragment(tag: String) {
-        if (supportFragmentManager.findFragmentByTag(tag)?.isAdded == true) {
-            Timber.tag("__").d("hide $tag")
-            supportFragmentManager.beginTransaction()
-                .hide(supportFragmentManager.findFragmentByTag(tag)!!).commit()
+    private fun cancelAllSelected() {
+        for (i in 0..home_tab_layout.tabCount) {
+            val tab = home_tab_layout.getTabAt(i)
+            tab?.customView?.findViewById<MaterialButton>(R.id.tab_button_active)?.visibility =
+                View.INVISIBLE
+            tab?.customView?.findViewById<ImageView>(R.id.tab_button_idle)?.apply {
+                alpha = 1f
+                visibility = View.VISIBLE
+            }
+
         }
     }
 
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack()
-        } else {
-            finish()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(POSITION, home_tab_layout.selectedTabPosition)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        home_view_pager.currentItem = savedInstanceState.getInt(POSITION)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) {
+            if (isStorageWritePermissionGranted(permissions, grantResults)) {
+                val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+                systemViewModel.downloadFile(downloadManager)
+            }
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        hideCurrentFragment(homeNavViewModel.currentFragment)
+    private fun setupIndexWorker() {
+        homeViewModel.setupIndexWorker()
+    }
+
+//    private fun setClickable(clickable: Boolean) {
+//        if (clickable) {
+//            activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+//        } else {
+//            activity?.window?.setFlags(
+//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+//            )
+//        }
+//    }
+
+    companion object {
+        const val POSITION = "position"
     }
 }

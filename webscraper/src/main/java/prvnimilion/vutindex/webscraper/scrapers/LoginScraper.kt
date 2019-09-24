@@ -1,6 +1,9 @@
 package prvnimilion.vutindex.webscraper.scrapers
 
+import android.webkit.WebResourceResponse
+import org.jsoup.Connection
 import org.jsoup.Jsoup
+import prvnimilion.vutindex.webscraper.di.scrapersModule
 import prvnimilion.vutindex.webscraper.util.INDEX_URL
 import prvnimilion.vutindex.webscraper.util.LOGIN_URL
 import prvnimilion.vutindex.webscraper.util.REQUEST_URL
@@ -9,13 +12,17 @@ import timber.log.Timber
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
+import java.net.CookieManager
+import java.net.HttpCookie
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.coroutines.suspendCoroutine
 
 class LoginScraper(private val vutCookieStore: VutCookieStore) {
 
     fun login(username: String, password: String): Boolean {
         Timber.tag("VUTdebug").d("Log in ...")
+        clearCookies()
 
         val response = Jsoup.connect(LOGIN_URL)
             .userAgent(USER_AGENT)
@@ -105,6 +112,19 @@ class LoginScraper(private val vutCookieStore: VutCookieStore) {
         Timber.tag("VUTdebug").d("Successfully logged in ...")
         vutCookieStore.saveCookies(cookies)
         return true
+    }
+
+    fun getLoginFdKey(): String {
+        val response = Jsoup.connect(LOGIN_URL)
+            .userAgent(USER_AGENT)
+            .execute()
+        val loginPage = response.parse()
+
+        return loginPage.getElementsByAttributeValue("name", FD_KEY).`val`()
+    }
+
+    fun clearCookies() {
+        vutCookieStore.clearCookies()
     }
 
     companion object {

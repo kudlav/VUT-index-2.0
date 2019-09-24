@@ -10,24 +10,29 @@ import prvnimilion.vutindex.ui_common.models.Subject
 import prvnimilion.vutindex.webscraper.util.INDEX_URL
 import prvnimilion.vutindex.webscraper.util.VutCookieStore
 import timber.log.Timber
+import java.lang.Exception
 
 class IndexScraper(private val vutCookieStore: VutCookieStore) {
 
     @SuppressLint("BinaryOperationInTimber")
-    fun getIndex(): Index {
+    fun getIndex(): Index? {
         Timber.tag("VUTdebug").d("Loading index ...")
         val cookies = vutCookieStore.loadCookies()
-        val indexRequest = Jsoup.connect(INDEX_URL)
-            .followRedirects(true)
-            .method(Connection.Method.GET)
-            .timeout(10 * 1000)
-            .cookies(cookies)
-            .execute()
-
-        cookies.putAll(indexRequest.cookies())
+        val indexResponse : Connection.Response?
+        try {
+            indexResponse = Jsoup.connect(INDEX_URL)
+                .followRedirects(true)
+                .method(Connection.Method.GET)
+                .timeout(10 * 1000)
+                .cookies(cookies)
+                .execute()
+        } catch (e : Exception) {
+            return null
+        }
+        cookies.putAll(indexResponse!!.cookies())
         vutCookieStore.saveCookies(cookies)
 
-        val indexDoc = indexRequest.parse()
+        val indexDoc = indexResponse.parse()
 
         val tableHeaders =
             indexDoc.getElementsByClass("main-content").first().getElementsByTag("h3").eachText()
@@ -37,7 +42,7 @@ class IndexScraper(private val vutCookieStore: VutCookieStore) {
             semesterTables.add(it.getElementsByTag("tbody").first())
         }
 
-        var id = 0
+        var semesterId = 0
         var tableIndex = 0
         val semesters = mutableListOf<Semester>()
         semesterTables.forEach { semesterTable ->
@@ -48,7 +53,7 @@ class IndexScraper(private val vutCookieStore: VutCookieStore) {
                 if (subject.className().contains("pov")) {
                     val parsedData = subject.getElementsByClass("center").eachText()
 
-                    val fullName = subject.select("[title=Detail zapsaného předmětu]").text();
+                    val fullName = subject.select("[title=Detail zapsaného předmětu]").text()
                     val shortName = parsedData[0]
                     val type = parsedData[2]
                     val credits = parsedData[3]
@@ -87,7 +92,7 @@ class IndexScraper(private val vutCookieStore: VutCookieStore) {
                         )
                     subjects.add(
                         Subject(
-                            id++,
+                            semesterId,
                             fullName,
                             shortName,
                             type,
@@ -103,7 +108,7 @@ class IndexScraper(private val vutCookieStore: VutCookieStore) {
                     )
                 }
             }
-            semesters.add(Semester(id++, tableHeaders[tableIndex++], subjects))
+            semesters.add(Semester(semesterId++, tableHeaders[tableIndex++], subjects))
         }
         return Index(semesters)
     }

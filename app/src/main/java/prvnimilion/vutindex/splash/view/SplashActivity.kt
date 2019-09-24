@@ -3,10 +3,12 @@ package prvnimilion.vutindex.splash.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import org.koin.android.viewmodel.ext.android.viewModel
 import prvnimilion.vutindex.BaseActivity
 import prvnimilion.vutindex.R
 import prvnimilion.vutindex.auth.view.LoginActivity
+import prvnimilion.vutindex.home.view.HomeActivity
 import prvnimilion.vutindex.splash.viewmodel.SplashViewModel
 import java.util.Timer
 import kotlin.concurrent.schedule
@@ -23,15 +25,33 @@ class SplashActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        showLoginAfterDelay()
+        splashViewModel.tryQuickLogin()
+        observeViewModels()
+    }
+
+    private fun observeViewModels() {
+        splashViewModel.userLoggedIn.observe(this, Observer {
+            if (it) {
+                showHomeActivity()
+            } else {
+                showLoginAfterDelay()
+            }
+        })
     }
 
     private fun showLoginAfterDelay() {
-        Timer("Splash", false).schedule(2000) {
+        Timer("Splash", false).schedule(1000) {
             val intent = Intent(this@SplashActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun showHomeActivity() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

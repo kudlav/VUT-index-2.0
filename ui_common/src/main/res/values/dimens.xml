@@ -2,21 +2,7 @@
 <resources>
 
     <!-- font sizes -->
-    <dimen name="font_huge">32sp</dimen>
-    <dimen name="font_captions_24">24sp</dimen>
-    <dimen name="font_text_larger_18">18sp</dimen>
-    <dimen name="font_text_normal_14">14sp</dimen>
-    <dimen name="font_text_smaller_12">12sp</dimen>
 
     <!-- spacing between two views -->
-    <dimen name="spacing_8">172dp</dimen>
-    <dimen name="spacing_7">110dp</dimen>
-    <dimen name="spacing_6">72dp</dimen>
-    <dimen name="spacing_5">46dp</dimen>
-    <dimen name="spacing_4">32dp</dimen>
-    <dimen name="spacing_3">20dp</dimen>
-    <dimen name="spacing_2">12dp</dimen>
-    <dimen name="spacing_1">8dp</dimen>
-    <dimen name="spacing_tiny_4dp">4dp</dimen>
 
 </resources>

@@ -10,11 +10,12 @@ import prvnimilion.vutindex.repository.repos.AuthRepository
 class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
 
     val userLoggedIn: MutableLiveData<Boolean> = MutableLiveData()
-    val userCredentials: MutableLiveData<MutableMap<String, String>> = MutableLiveData()
+    val userCredentials: MutableLiveData<Pair<String, String>> = MutableLiveData()
 
-    fun loginUser(username: String, password: String, saveCredentials: Boolean? = false) {
+    fun loginUser(username: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (repository.loginUser(username, password, saveCredentials)) {
+            if (repository.loginUser(username, password)) {
+
                 userLoggedIn.postValue(true)
             } else {
                 //TODO: Resolve the reason

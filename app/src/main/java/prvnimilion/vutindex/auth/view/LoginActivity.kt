@@ -3,6 +3,7 @@ package prvnimilion.vutindex.auth.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.login_screen.*
@@ -32,10 +33,11 @@ class LoginActivity : BaseActivity() {
 
     private fun observeViewModel() {
         loginViewModel.userLoggedIn.observe(this, Observer {
-            Snackbar.make(app_icon, "User logged in: $it", Snackbar.LENGTH_LONG).show()
             toggleLoading(false)
             if (it) {
                 startHomeActivity()
+            } else {
+                Snackbar.make(app_icon, "Něco se pokazilo", Snackbar.LENGTH_SHORT).show()
             }
         })
     }
@@ -43,11 +45,7 @@ class LoginActivity : BaseActivity() {
     private fun observeLoginButton() {
         login_button.setOnClickListener {
             if (username_et.text.toString().isNotEmpty() && password_et.text.toString().isNotEmpty()) {
-                loginViewModel.loginUser(
-                    username_et.text.toString(),
-                    password_et.text.toString(),
-                    remember_password_cb.isChecked
-                )
+                loginViewModel.loginUser(username_et.text.toString(), password_et.text.toString())
                 toggleLoading(true)
             }
         }
@@ -67,14 +65,8 @@ class LoginActivity : BaseActivity() {
         loginViewModel.getCredentials()
 
         loginViewModel.userCredentials.observe(this, Observer {
-            it.forEach { credentials ->
-                if (credentials.key.isNotEmpty()) {
-                    username_et.setText(credentials.key)
-                    password_et.setText(credentials.value)
-                    remember_password_cb.isChecked = true
-                }
-                return@Observer
-            }
+            username_et.setText(it.first)
+            password_et.setText(it.second)
         })
     }
 

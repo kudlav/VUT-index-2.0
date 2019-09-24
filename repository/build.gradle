@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 apply from: '../dependency_versions.gradle'
 
 android {
@@ -26,9 +28,16 @@ dependencies {
 
     implementation project(':webscraper')
     implementation project(':ui_common')
+    implementation project(':database')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.security:security-crypto:$security_version"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+
 
     implementation "org.koin:koin-android-scope:$koin_version"
 
