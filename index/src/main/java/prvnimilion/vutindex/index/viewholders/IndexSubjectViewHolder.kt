@@ -7,7 +7,7 @@ import prvnimilion.vutindex.index.models.IndexSubjectModel
 import prvnimilion.vutindex.ui_common.viewholder.BaseViewHolder
 
 class IndexSubjectViewHolder(itemView: View) : BaseViewHolder<IndexSubjectModel>(itemView) {
-    var mode = MODE_LESS
+    private var mode = MODE_LESS
 
     override fun bindView(item: IndexSubjectModel) {
         itemView.findViewById<TextView>(R.id.full_name).text = item.fullName
@@ -26,8 +26,9 @@ class IndexSubjectViewHolder(itemView: View) : BaseViewHolder<IndexSubjectModel>
 
         itemView.findViewById<CheckBox>(R.id.credit_given).isChecked = item.creditGiven
 
+        val card = itemView.findViewById<View>(R.id.card)
         val showMoreButton = itemView.findViewById<ImageView>(R.id.show_more)
-        showMoreButton.setOnClickListener {
+        card.setOnClickListener {
             mode = if (mode == MODE_LESS) {
                 showMoreButton.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_expand_less_black_24dp))
                 itemView.findViewById<TextView>(R.id.full_name).visibility = View.VISIBLE

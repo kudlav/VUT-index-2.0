@@ -11,12 +11,18 @@ import prvnimilion.vutindex.ui_common.models.Semester
 import prvnimilion.vutindex.ui_common.models.Subject
 import prvnimilion.vutindex.ui_common.util.Difference
 import prvnimilion.vutindex.webscraper.scrapers.IndexScraper
+import timber.log.Timber
 
 class IndexRepository(private val indexScraper: IndexScraper, private val indexDao: IndexDao) {
 
     suspend fun getIndex(): Index? {
-        val index = indexScraper.getIndex()
-        saveIndexToDb(index)
+        var index: Index? = null
+        try {
+            index = indexScraper.getIndex()
+            saveIndexToDb(index)
+        } catch (e: Exception) {
+            Timber.e(e.toString())
+        }
         return index
     }
 

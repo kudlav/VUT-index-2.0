@@ -4,5 +4,10 @@
     <!-- font sizes -->
 
     <!-- spacing between two views -->
-
+    <dimen name="spacing_5">46dp</dimen>
+    <dimen name="spacing_4">32dp</dimen>
+    <dimen name="spacing_3">20dp</dimen>
+    <dimen name="spacing_2">12dp</dimen>
+    <dimen name="spacing_1">8dp</dimen>
+    <dimen name="spacing_tiny_4dp">4dp</dimen>
 </resources>

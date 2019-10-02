@@ -6,14 +6,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import prvnimilion.vutindex.repository.repos.AuthRepository
-import prvnimilion.vutindex.workers.IndexWorkerManager
+import prvnimilion.vutindex.workers.VutIndexWorkerManager
 
 class MenuViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     val userLoggedOut: MutableLiveData<Boolean> = MutableLiveData()
 
     fun logoutUser() {
-        IndexWorkerManager.stopIndexService()
+        VutIndexWorkerManager.stopIndexService()
         viewModelScope.launch(Dispatchers.IO) {
             userLoggedOut.postValue(authRepository.logoutUser())
         }

@@ -61,15 +61,16 @@ class SystemViewModel(private val repository: AuthRepository) : ViewModel() {
     }
 
 
-    fun setupWebViewClient(webView: WebView, finishedLoading: () -> Unit) {
+    fun setupWebViewClient(webView: WebView, finishedLoading: (Boolean) -> Unit) {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 if (url?.contains("cz/?armsgt")!!) {
                     webView.loadUrl(INTRA_URL)
                 } else if (url == INTRA_URL) {
-                    finishedLoading()
+                    finishedLoading(true)
                 }
+                finishedLoading(false)
                 Timber.d(url)
             }
         }

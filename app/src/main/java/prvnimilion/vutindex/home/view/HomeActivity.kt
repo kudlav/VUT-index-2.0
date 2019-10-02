@@ -8,11 +8,9 @@ import android.app.DownloadManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
@@ -26,7 +24,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import prvnimilion.vutindex.BaseActivity
 import prvnimilion.vutindex.R
 import prvnimilion.vutindex.auth.view.LoginActivity
-import prvnimilion.vutindex.auth.viewmodel.LoginViewModel
 import prvnimilion.vutindex.home.HomePagerAdapter
 import prvnimilion.vutindex.home.viewmodel.HomeViewModel
 import prvnimilion.vutindex.index.adapters.IndexAdapter
@@ -37,14 +34,12 @@ import prvnimilion.vutindex.repository.util.PermissionsUtil.hasStorageWritePermi
 import prvnimilion.vutindex.repository.util.PermissionsUtil.isStorageWritePermissionGranted
 import prvnimilion.vutindex.repository.util.PermissionsUtil.requestStorageWritePermission
 import prvnimilion.vutindex.system.viewmodel.SystemViewModel
-import timber.log.Timber
 
 class HomeActivity : BaseActivity() {
 
     private val indexViewModel: IndexViewModel by viewModel()
     private val menuViewModel: MenuViewModel by viewModel()
     private val systemViewModel: SystemViewModel by viewModel()
-    private val loginViewModel: LoginViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
 
     private var shortAnimationDuration: Int = 0
@@ -54,7 +49,6 @@ class HomeActivity : BaseActivity() {
     private lateinit var indexView: View
     private lateinit var menuView: View
     private lateinit var systemView: View
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,9 +121,12 @@ class HomeActivity : BaseActivity() {
         loadingSpinner.bringToFront()
         loadingSpinner.visibility = View.VISIBLE
 
-        systemViewModel.setupWebViewClient(webView) {
-            loadingSpinner.visibility = View.GONE
-            systemView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).isRefreshing = false
+        systemViewModel.setupWebViewClient(webView) { firstLoad ->
+            if (firstLoad) {
+                loadingSpinner.visibility = View.GONE
+            }
+            systemView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).isRefreshing =
+                false
         }
         systemViewModel.setupChromeWebClient(webView)
 
