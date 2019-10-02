@@ -34,6 +34,7 @@ import prvnimilion.vutindex.repository.util.PermissionsUtil.hasStorageWritePermi
 import prvnimilion.vutindex.repository.util.PermissionsUtil.isStorageWritePermissionGranted
 import prvnimilion.vutindex.repository.util.PermissionsUtil.requestStorageWritePermission
 import prvnimilion.vutindex.system.viewmodel.SystemViewModel
+import timber.log.Timber
 
 class HomeActivity : BaseActivity() {
 
@@ -101,6 +102,8 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun showMenuTab() {
+        menuViewModel.getIsicCredit()
+
         menuView.findViewById<TextView>(R.id.logout_button).setOnClickListener {
             menuViewModel.logoutUser()
         }
@@ -111,6 +114,10 @@ class HomeActivity : BaseActivity() {
                 startActivity(intent)
                 finish()
             }
+        })
+
+        menuViewModel.userCredit.observe(this, Observer {
+            menuView.findViewById<TextView>(R.id.user_credit).text = it
         })
     }
 
