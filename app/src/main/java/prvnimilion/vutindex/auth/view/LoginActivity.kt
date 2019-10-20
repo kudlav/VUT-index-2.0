@@ -36,7 +36,7 @@ class LoginActivity : BaseActivity() {
             if (it) {
                 startHomeActivity()
             } else {
-                Snackbar.make(app_icon, "Něco se pokazilo", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(app_icon, getString(R.string.login_wrong_password), Snackbar.LENGTH_SHORT).show()
             }
         })
     }

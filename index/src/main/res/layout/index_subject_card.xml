@@ -88,7 +88,7 @@
             android:id="@+id/credit_given_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zápočet: "
+            android:text="@string/index.credit.given"
             android:textAppearance="@style/TextAppearance.VutIndex.Label"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/credit_given_wrapper"

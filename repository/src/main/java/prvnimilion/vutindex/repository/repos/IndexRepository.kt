@@ -95,7 +95,7 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
         }
     }
 
-    private suspend fun clearDb() {
+    suspend fun clearDb() {
         indexDao.deleteAllSubjects()
         indexDao.deleteAllSemesters()
     }

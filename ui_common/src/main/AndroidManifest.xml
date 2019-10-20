@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="prvnimilion.vutindex.ui_common" />
+<manifest package="prvnimilion.vutindex.ui_common" />

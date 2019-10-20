@@ -281,20 +281,13 @@ class HomeActivity : BaseActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
     private fun setupWorkers() {
         homeViewModel.setupWorkers()
     }
-
-//    private fun setClickable(clickable: Boolean) {
-//        if (clickable) {
-//            activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-//        } else {
-//            activity?.window?.setFlags(
-//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-//            )
-//        }
-//    }
 
     companion object {
         const val POSITION = "position"

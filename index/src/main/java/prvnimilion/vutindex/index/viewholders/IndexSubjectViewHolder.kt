@@ -13,10 +13,10 @@ class IndexSubjectViewHolder(itemView: View) : BaseViewHolder<IndexSubjectModel>
         itemView.findViewById<TextView>(R.id.full_name).text = item.fullName
         itemView.findViewById<TextView>(R.id.short_name).text = item.shortName
 
-        itemView.findViewById<TextView>(R.id.type).text = "Typ: ${item.type}"
-        itemView.findViewById<TextView>(R.id.completion).text = "Ukončení: ${item.completion}"
-        itemView.findViewById<TextView>(R.id.credits).text = "Kredity: ${item.credits}"
-        itemView.findViewById<TextView>(R.id.term_time).text = "Termín: ${item.termTime}"
+        itemView.findViewById<TextView>(R.id.type).text = "${itemView.context.getString(R.string.index_type)} ${item.type}"
+        itemView.findViewById<TextView>(R.id.completion).text = "${itemView.context.getString(R.string.index_completition)} ${item.completion}"
+        itemView.findViewById<TextView>(R.id.credits).text = "${itemView.context.getString(R.string.index_credits)} ${item.credits}"
+        itemView.findViewById<TextView>(R.id.term_time).text = "${itemView.context.getString(R.string.index_term)} ${item.termTime}"
 
         val points = item.points.toIntOrNull() ?: if (item.passed) 100 else 0
 
