@@ -111,7 +111,8 @@
                 android:layout_marginStart="-5dp"
                 android:clickable="false"
                 android:scaleX="0.75"
-                android:scaleY="0.75" />
+                android:scaleY="0.75"
+                android:background="@null"/>
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -163,7 +164,8 @@
                 android:layout_marginStart="-5dp"
                 android:clickable="false"
                 android:scaleX="0.75"
-                android:scaleY="0.75" />
+                android:scaleY="0.75"
+                android:background="@null"/>
         </RelativeLayout>
 
 

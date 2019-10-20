@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 class VutIndexWorkerManager {
 
     companion object {
-        fun startIndexService(minutes: Long) {
+        fun startServices(minutes: Long) {
             Timber.tag("VutIndexWorker").d("Worker has been scheduled for: $minutes minutes")
             val indexWorkRequest =
                 PeriodicWorkRequest.Builder(IndexWorker::class.java, minutes, TimeUnit.MINUTES)
@@ -25,7 +25,7 @@ class VutIndexWorkerManager {
                 .enqueue(mutableListOf(indexWorkRequest, messagesWorkRequest))
         }
 
-        fun stopIndexService() {
+        fun stopServices() {
             Timber.tag("VutIndexWorker").d("Worker has been laid off")
             WorkManager.getInstance(BaseApplication.applicationContext()).cancelAllWork()
         }

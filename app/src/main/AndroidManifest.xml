@@ -27,7 +27,7 @@
 
         <activity
             android:name="prvnimilion.vutindex.auth.view.LoginActivity"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
 
         <activity

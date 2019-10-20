@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "73749577607",
+    "firebase_url": "https://vutindex2.firebaseio.com",
+    "project_id": "vutindex2",
+    "storage_bucket": "vutindex2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73749577607:android:19f4f8ef2fbcb4ca2a1d22",
+        "android_client_info": {
+          "package_name": "prvnimilion.vutindex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73749577607-ev0fjg8g65dt0nqi3mvp6k28c2sgclvm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "prvnimilion.vutindex",
+            "certificate_hash": "a77ca3094fca180a5a084947da247c0b8c6f66af"
+          }
+        },
+        {
+          "client_id": "73749577607-5o6dn0knp51j9cenjt51mo832lvc2m25.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzURr-MlxFxwsoE7k7zEzTEZmPfplx1Wc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73749577607-5o6dn0knp51j9cenjt51mo832lvc2m25.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

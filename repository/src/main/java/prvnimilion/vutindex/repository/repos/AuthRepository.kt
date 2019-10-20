@@ -33,6 +33,7 @@ class AuthRepository(
     fun quickLogin(): Boolean {
         val username = preferenceProvider.getUserName() ?: ""
         val password = preferenceProvider.getPassword() ?: ""
+        if(username == "") return false
         return if (refreshSession()) true else loginScraper.login(username, password)
     }
 

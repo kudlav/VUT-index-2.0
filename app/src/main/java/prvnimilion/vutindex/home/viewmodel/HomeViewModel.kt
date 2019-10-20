@@ -6,13 +6,13 @@ import prvnimilion.vutindex.workers.VutIndexWorkerManager
 class HomeViewModel : ViewModel() {
     var tabLayoutInitialized = false
 
-    fun setupIndexWorker(){
-        stopIndexWorker()
-        VutIndexWorkerManager.startIndexService(15)
+    fun setupWorkers(){
+        stopWorkers()
+        VutIndexWorkerManager.startServices(15)
     }
 
-    fun stopIndexWorker() {
-        VutIndexWorkerManager.stopIndexService()
+    private fun stopWorkers() {
+        VutIndexWorkerManager.stopServices()
     }
 }
 

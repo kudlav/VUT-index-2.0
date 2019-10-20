@@ -1,9 +1,6 @@
 package prvnimilion.vutindex.webscraper.scrapers
 
-import android.webkit.WebResourceResponse
-import org.jsoup.Connection
 import org.jsoup.Jsoup
-import prvnimilion.vutindex.webscraper.di.scrapersModule
 import prvnimilion.vutindex.webscraper.util.INDEX_URL
 import prvnimilion.vutindex.webscraper.util.LOGIN_URL
 import prvnimilion.vutindex.webscraper.util.REQUEST_URL
@@ -12,11 +9,8 @@ import timber.log.Timber
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
-import java.net.CookieManager
-import java.net.HttpCookie
 import java.net.HttpURLConnection
 import java.net.URL
-import kotlin.coroutines.suspendCoroutine
 
 class LoginScraper(private val vutCookieStore: VutCookieStore) {
 

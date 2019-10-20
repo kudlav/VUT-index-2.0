@@ -3,7 +3,6 @@ package prvnimilion.vutindex.auth.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.login_screen.*
@@ -12,7 +11,7 @@ import prvnimilion.vutindex.BaseActivity
 import prvnimilion.vutindex.R
 import prvnimilion.vutindex.auth.viewmodel.LoginViewModel
 import prvnimilion.vutindex.home.view.HomeActivity
-import timber.log.Timber
+import prvnimilion.vutindex.ui_common.dialogs.PrivacyPolicyPopup
 
 class LoginActivity : BaseActivity() {
 
@@ -28,7 +27,7 @@ class LoginActivity : BaseActivity() {
 
         fillCredentials()
         observeViewModel()
-        observeLoginButton()
+        observeButtons()
     }
 
     private fun observeViewModel() {
@@ -42,13 +41,21 @@ class LoginActivity : BaseActivity() {
         })
     }
 
-    private fun observeLoginButton() {
+    private fun observeButtons() {
         login_button.setOnClickListener {
             if (username_et.text.toString().isNotEmpty() && password_et.text.toString().isNotEmpty()) {
                 loginViewModel.loginUser(username_et.text.toString(), password_et.text.toString())
                 toggleLoading(true)
             }
         }
+        privacy_policy.setOnClickListener {
+            showPrivacyPolicy()
+        }
+    }
+
+    private fun showPrivacyPolicy(){
+        val privacyPolicyPopup = PrivacyPolicyPopup()
+        privacyPolicyPopup.show(supportFragmentManager, PRIVACY_POLICY_POPUP_TAG)
     }
 
     private fun toggleLoading(isLoading: Boolean) {
@@ -74,6 +81,11 @@ class LoginActivity : BaseActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+
+    companion object {
+        const val PRIVACY_POLICY_POPUP_TAG = "privacy_policy"
     }
 
 }

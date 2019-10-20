@@ -18,7 +18,7 @@ class MenuViewModel(
     val userCredit: MutableLiveData<String> = MutableLiveData()
 
     fun logoutUser() {
-        VutIndexWorkerManager.stopIndexService()
+        VutIndexWorkerManager.stopServices()
         viewModelScope.launch(Dispatchers.IO) {
             userLoggedOut.postValue(authRepository.logoutUser())
         }

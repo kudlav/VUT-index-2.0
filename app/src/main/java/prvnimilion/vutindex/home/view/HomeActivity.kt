@@ -34,7 +34,6 @@ import prvnimilion.vutindex.repository.util.PermissionsUtil.hasStorageWritePermi
 import prvnimilion.vutindex.repository.util.PermissionsUtil.isStorageWritePermissionGranted
 import prvnimilion.vutindex.repository.util.PermissionsUtil.requestStorageWritePermission
 import prvnimilion.vutindex.system.viewmodel.SystemViewModel
-import timber.log.Timber
 
 class HomeActivity : BaseActivity() {
 
@@ -66,9 +65,11 @@ class HomeActivity : BaseActivity() {
         showMenuTab()
         showSystemTab()
 
-        setupIndexWorker()
+        setupWorkers()
 
         home_tab_layout.selectTab(home_tab_layout.getTabAt(0))
+        //disables swipe
+        home_view_pager.swipeLocked = true
     }
 
     private fun showIndexTab() {
@@ -280,8 +281,8 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    private fun setupIndexWorker() {
-        homeViewModel.setupIndexWorker()
+    private fun setupWorkers() {
+        homeViewModel.setupWorkers()
     }
 
 //    private fun setClickable(clickable: Boolean) {

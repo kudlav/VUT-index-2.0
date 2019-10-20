@@ -1,8 +1,33 @@
 <resources>
 
-    <!-- Login -->
-
-    <!-- Home -->
-
+<string name="termsAndConditions">
+TruzzyApps vyvinuli bezplatnou aplikaci VUT Index. Tato služba je poskytována TruzzyApps bezplatně.
+Tato stránka informuje uživatele ohledně našich podmínek spojených se sběrem a použitím osobních údajů, pokud se rozhodl tuto službu využívat.
+Pokud se rozhodnete využívat tuto službu, pak souhlasíte se sběrem a použitím osobních údajů v souvladu s těmito zásadami. Osobní údaje, které sbíráme, jsou použity pro zdokonalovaní služby. V žádném případě nebudou sdíleny s třetí stranou jinak, než je uvedenov těchto podmínkách.
+Podmínky uvedené v těchto zásadách používání dat jsou stejné, jako podmínky, které naleznete uvnitř aplikace VUT Index
+Osobní údaje které sbíráme
+Pro lepší zážitek při používání naší služby, můžeme požadovat poskytnutí některých osobních údajů. Údaje, které sbíráme zůstanou uloženy ve vašem zařízení a nejsou námi žádným způsobem sbírány.
+Aplikace využívá služeb třetích stran, které mohou sbírat osobní údaje pro vaši identifikaci.
+	Firebase Analytics
+Rádi bychom Vás informovali, že pokud využíváte našich služeb, v případě chyby aplikace sbíráme informace(skrze služby třetích stran) z vašeho zařízení nazvaná "Log Data". Tato "Log Data" mohou obsahovat informace jako adresu internetového protokolu Vašeho zařízení ("IP"), jméno zařízení, verzi operačního systému, nastavení aplikace, čas a datum využívání aplikace a další statistiky.
+Cookies
+Cookies jsou sobory obsahující malé množství dat, které jsou často používány jako anonymní unikátní identifikátory. Jsou zasílány do Vašeho prohlížeče z internetových stránek, které navštívíte a jsou uloženy ve vnitřní paměti Vašeho zařízení.
+Tato služba "cookies" nevyužívá přímo. Avšak aplikace může používat kód třetích stran a knihovny, které "cookies" využívají pro sběr informací k vylepšování jejich služeb. Máte možnost tyto soubory odmítnout. Pokud však odmítnete tyto soubory, nebudete pak schopni využívat některé části našich služeb.
+Poskytovatelé služeb
+Můžeme využívat služby společností třetích stran z následujících důvodů:
+	K usnadnění našich služeb;
+	K poskytování služeb našim jménem;
+	K analyzování způsobu, jakým je naše služba používána.
+Rádi bychom Vás informovali, že služby třetích stran mají přůstup k Vašim osobním údajům, z důvodu vykonání zadaných úkolů našim jménem. Jsou avšak povinní tyto údaje nezveřejňovat k jiným účelům.
+Bezpečnost
+Vážíme si Vaší důvěry ohledně svěření Vašich osobních údajů. Proto se snažíme používat komerčně přijatelné prostředky pro jejich ochranu. Mějte prosím na mysli, že žádný způsob přenosu dat po internetu, nebo způsob elektronického ukládání dat není 100% bezpečný a spolehlivý a nejsme schopni jejich zaručit absolutní bezpečnost	.
+Odkazy na další internetové stránky
+Tato služba může obsahovat odkazy na jiné internetové stránky. Pokud kliknete na odkaz, budete na příslušnou stránku přesměrování. Berte prosím v potaz, že jakékoliv jiné internetové stránky nejsou provozovány mnou. Z toho důvodu Vám doporučuji přečíst si zásady používání těchto internetových stránek. Nemáme žádnou kontrolu a neneseme žádnou zodpovědnost za obsah,  zásady požívání, nebo praktiky jiných internetovách stránek nebo služeb.
+Ochrana soukromí dětí
+Tato služba necílí na osoby mladší 13 let. Nesbíráme vědomě osobní údaje osob mladších 13 let. V případě nalezení osobních údajů osoby mladší 13 let je s okamžitou platností mažeme z našeho serveru. Pokud jste rodič nebo opatrovník a jste si vědomi, že Vaše dítě nám poskytlo své osobní údaje, prosím, kontaktujte nás, abychom byli schopni podniknout nezbytné kroky.
+Změny zásad používání dat
+Vyhrazujeme si změny našich zásad. Proto Vám doporučujeme kontrolovat tuto stránku pravidelně. Upozorníme Vás na změnu zásad změnou obsahu na této stránce. Tyto změny nabývají okamžité platnosti.
+Kontaktujte nás
+Pokud máte jakékoliv otázky ohledně našich zásad používání dat, neváhejte nás kontaktovat.</string>
 
 </resources>

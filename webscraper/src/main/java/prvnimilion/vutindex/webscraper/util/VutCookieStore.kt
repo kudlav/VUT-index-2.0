@@ -3,8 +3,6 @@ package prvnimilion.vutindex.webscraper.util
 import android.content.Context
 import com.loopj.android.http.PersistentCookieStore
 import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie
-import timber.log.Timber
-import java.net.CookieManager
 
 class VutCookieStore(appContext: Context) : PersistentCookieStore(appContext) {
 
@@ -26,6 +24,6 @@ class VutCookieStore(appContext: Context) : PersistentCookieStore(appContext) {
     }
 
     fun clearCookies() {
-        cookies.clear()
+        clear()
     }
 }
