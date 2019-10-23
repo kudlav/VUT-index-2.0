@@ -5,7 +5,8 @@ import prvnimilion.vutindex.webscraper.scrapers.MessagesScraper
 
 class MessagesRepository(
     private val messagesScraper: MessagesScraper,
-    private val preferenceProvider: PreferenceProvider) {
+    private val preferenceProvider: PreferenceProvider
+) {
 
     private fun setLastMessage(msgTitle: String) {
         preferenceProvider.setLastMessage(msgTitle)
@@ -17,10 +18,13 @@ class MessagesRepository(
 
     fun isNewMessage(): Boolean {
         val newMsgTitle = messagesScraper.checkNewMessages()
-        val lastMsgTitle = getLastMessage()
-        if (newMsgTitle != lastMsgTitle) {
-            setLastMessage(newMsgTitle)
-            return lastMsgTitle != ""
+        if (!newMsgTitle.isNullOrEmpty()) {
+            val lastMsgTitle = getLastMessage()
+            if (newMsgTitle != lastMsgTitle) {
+                setLastMessage(newMsgTitle)
+                return lastMsgTitle != ""
+            }
+            return false
         }
         return false
     }

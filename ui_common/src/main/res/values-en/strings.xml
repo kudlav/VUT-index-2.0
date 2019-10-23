@@ -7,7 +7,7 @@
     <string name="login.password.field.hint">BUT password</string>
     <string name="login.privacy.policy">Privacy policy</string>
     <string name="login.button.caption">Log In</string>
-    <string name="login.wrong.password">Incorrect credentials</string>
+    <string name="login.wrong.password">Incorrect credentials or you\'re not connected to the internet</string>
 
     <!-- Home -->
     <string name="index.tabbar.title">Index</string>

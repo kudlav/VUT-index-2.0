@@ -6,7 +6,7 @@
     <string name="login.password.field.hint">Vut heslo</string>
     <string name="login.privacy.policy">Zásady používání dat</string>
     <string name="login.button.caption">Přihlásit se</string>
-    <string name="login.wrong.password">Zadané údaje jsou nesprávné</string>
+    <string name="login.wrong.password">Zadané údaje jsou nesprávné nebo nejste připojeni k internetu</string>
 
     <!-- Home -->
     <string name="index.tabbar.title">Index</string>

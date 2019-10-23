@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'io.fabric'
+
 apply from: '../dependency_versions.gradle'
 
 android {
@@ -14,8 +16,8 @@ android {
         applicationId "prvnimilion.VUTIndex"
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
-        versionCode 25
-        versionName "2.0"
+        versionCode 26
+        versionName "2.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -60,6 +62,7 @@ dependencies {
 
     implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
     implementation "com.google.firebase:firebase-perf:$firebase_performance_version"
+    implementation "com.crashlytics.sdk.android:crashlytics:$crashlytics_version"
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test:runner:$test_runner_version"
