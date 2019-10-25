@@ -12,7 +12,7 @@ import java.io.OutputStreamWriter
 import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
-import java.net.UnknownHostException
+import java.net.URLEncoder
 
 class LoginScraper(private val vutCookieStore: VutCookieStore) {
 
@@ -29,8 +29,8 @@ class LoginScraper(private val vutCookieStore: VutCookieStore) {
             cookies["fontsLoaded"] = "true"
 
             val credentials = mutableMapOf<String, String>()
-            credentials[USERNAME_KEY] = username
-            credentials[PASSWORD_KEY] = password
+            credentials[USERNAME_KEY] = URLEncoder.encode(username, "UTF-8")
+            credentials[PASSWORD_KEY] = URLEncoder.encode(password, "UTF-8")
 
             val loginPage = response.parse()
 
@@ -58,12 +58,14 @@ class LoginScraper(private val vutCookieStore: VutCookieStore) {
             http.requestMethod = "POST"
             http.setRequestProperty("User-Agent", USER_AGENT)
             http.setRequestProperty("Cookie", cookieString)
+
             http.doInput = true
             http.doOutput = true
             http.instanceFollowRedirects = false
             http.connect()
 
             val writer = OutputStreamWriter(http.outputStream, "UTF-8")
+            Timber.d(postData.toString())
             writer.write(postData.toString())
             writer.close()
 
