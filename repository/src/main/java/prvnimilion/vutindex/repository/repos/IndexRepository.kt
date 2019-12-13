@@ -146,7 +146,7 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
                                 return Difference(
                                     DifferenceType.POINTS,
                                     newSubject.shortName,
-                                    pointsGiven = (prevPoints - newPoints)
+                                    pointsGiven = (newPoints - prevPoints)
                                 )
                             }
                         }
