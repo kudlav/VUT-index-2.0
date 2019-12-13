@@ -12,7 +12,7 @@ import prvnimilion.vutindex.index.models.IndexSubjectModel
 import prvnimilion.vutindex.index.viewholders.IndexHeaderViewHolder
 import prvnimilion.vutindex.index.viewholders.IndexSubjectViewHolder
 
-class IndexAdapter(private val context: Context, private val dataSet: MutableList<IndexFeedModel>) :
+class IndexAdapter(private val context: Context, private var dataSet: MutableList<IndexFeedModel>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
@@ -61,5 +61,9 @@ class IndexAdapter(private val context: Context, private val dataSet: MutableLis
 
             else -> return
         }
+    }
+
+    fun updateDataSet(newDataSet: MutableList<IndexFeedModel>) {
+        dataSet = newDataSet
     }
 }

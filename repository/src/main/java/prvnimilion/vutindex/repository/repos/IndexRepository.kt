@@ -114,6 +114,7 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
 
         if (oldIndex == null || newIndex == null) return null
 
+        Timber.d("GOT both indexes, starting to compare them")
         if (oldIndex!!.semesters.size == newIndex!!.semesters.size) {
             for (i in 0 until oldIndex!!.semesters.size) {
                 if (oldIndex!!.semesters[i] == newIndex!!.semesters[i]) {
@@ -132,11 +133,15 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
                                 newSubject.shortName,
                                 creditGiven = newSubject.creditGiven
                             )
-                            oldSubject.points != newSubject.points -> return Difference(
-                                DifferenceType.POINTS,
-                                newSubject.shortName,
-                                pointsGiven = (newSubject.points.toIntOrNull()?.minus(if (oldSubject.points.toIntOrNull() != null) oldSubject.points.toIntOrNull()!! else 0))
-                            )
+                            oldSubject.points != newSubject.points -> {
+                                val prevPoints = oldSubject.points.toIntOrNull() ?: 0
+                                val newPoints = newSubject.points.toIntOrNull() ?: 0
+                                return Difference(
+                                    DifferenceType.POINTS,
+                                    newSubject.shortName,
+                                    pointsGiven = (prevPoints - newPoints)
+                                )
+                            }
                         }
                     }
                 }

@@ -1,16 +1,16 @@
 package prvnimilion.vutindex.index.models
 
 data class IndexSubjectModel(
-    val id : Int,
-    val fullName: String,
-    val shortName: String,
-    val type: String,
-    val credits: String,
-    val completion: String,
-    val creditGiven: Boolean,
-    val points: String,
-    val grade: String,
-    val termTime: String,
-    val passed: Boolean,
-    val vsp: String
+    var id : Int,
+    var fullName: String,
+    var shortName: String,
+    var type: String,
+    var credits: String,
+    var completion: String,
+    var creditGiven: Boolean,
+    var points: String,
+    var grade: String,
+    var termTime: String,
+    var passed: Boolean,
+    var vsp: String
 ) : IndexFeedModel

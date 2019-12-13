@@ -91,6 +91,7 @@ class HomeActivity : BaseActivity() {
                 progressBar.visibility = View.GONE
 
             } else {
+                (recyclerView.adapter as IndexAdapter).updateDataSet(it)
                 recyclerView.adapter?.notifyDataSetChanged()
                 indexView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).isRefreshing =
                     false

@@ -25,10 +25,10 @@ ext {
 
     paging_version = '1.0.1'
 
-    lifecycle_viewmodel_version= '2.2.0-beta01'
+    lifecycle_viewmodel_version= '2.2.0-rc03'
 
-    firebase_analytics_version = '17.2.0'
-    firebase_performance_version = '19.0.1'
+    firebase_analytics_version = '17.2.1'
+    firebase_performance_version = '19.0.3'
     crashlytics_version = '2.10.1'
 
     //DI

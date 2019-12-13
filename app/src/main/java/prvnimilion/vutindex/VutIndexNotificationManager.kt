@@ -45,8 +45,8 @@ class VutIndexNotificationManager {
                 )
             )
 
-        when {
-            difference.differenceType == DifferenceType.PASSED -> {
+        when (difference.differenceType) {
+            DifferenceType.PASSED -> {
                 val notifString = if (difference.passed!!) {
                     "Předmět ${difference.subject} úspěšně absolvován"
                 } else {
@@ -58,7 +58,7 @@ class VutIndexNotificationManager {
                     .setContentText(notifString)
 
             }
-            difference.differenceType == DifferenceType.CREDIT -> {
+            DifferenceType.CREDIT -> {
                 val notifString = if (difference.creditGiven!!) {
                     "Zápočet z ${difference.subject} udělen! "
                 } else {
@@ -70,7 +70,7 @@ class VutIndexNotificationManager {
                     .setContentText(notifString)
 
             }
-            difference.differenceType == DifferenceType.POINTS -> {
+            DifferenceType.POINTS -> {
                 notificationBuilder
                     .setContentTitle("Nové body:")
                     .setContentText(
@@ -78,7 +78,7 @@ class VutIndexNotificationManager {
                     )
 
             }
-            difference.differenceType == DifferenceType.MESSAGE -> {
+            DifferenceType.MESSAGE -> {
                 notificationBuilder
                     .setContentText("Nová VUTzpráva")
             }
