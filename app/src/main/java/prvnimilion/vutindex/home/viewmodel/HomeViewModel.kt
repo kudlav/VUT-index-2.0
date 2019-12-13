@@ -7,12 +7,7 @@ class HomeViewModel : ViewModel() {
     var tabLayoutInitialized = false
 
     fun setupWorkers(){
-        stopWorkers()
         VutIndexWorkerManager.startServices(15)
-    }
-
-    private fun stopWorkers() {
-        VutIndexWorkerManager.stopServices()
     }
 }
 

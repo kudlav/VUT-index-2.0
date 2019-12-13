@@ -12,6 +12,8 @@ import prvnimilion.vutindex.ui_common.models.Subject
 import prvnimilion.vutindex.ui_common.util.Difference
 import prvnimilion.vutindex.webscraper.scrapers.IndexScraper
 import timber.log.Timber
+import java.util.*
+import kotlin.random.Random
 
 class IndexRepository(private val indexScraper: IndexScraper, private val indexDao: IndexDao) {
 
@@ -121,6 +123,10 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
                     for (j in 0 until oldIndex!!.semesters[i].subjects.size) {
                         val oldSubject = oldIndex!!.semesters[i].subjects[j]
                         val newSubject = newIndex!!.semesters[i].subjects[j]
+
+//                        if(j == 0 && i == 0) {
+//                            oldSubject.points = Random.nextInt(100).toString()
+//                        }
 
                         when {
                             oldSubject.passed != newSubject.passed -> return Difference(
