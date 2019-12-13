@@ -105,12 +105,13 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
     suspend fun compareIndexes(coroutineScope: CoroutineScope): Difference? {
         var newIndex: Index? = null
         var oldIndex: Index? = null
+        //Calls have to be in this exact order
         val job = coroutineScope.launch {
-            newIndex = getIndex()
+            oldIndex = getIndexFromDb()
         }
         job.join()
         val job2 = coroutineScope.launch {
-            oldIndex = getIndexFromDb()
+            newIndex = getIndex()
         }
         job2.join()
 
