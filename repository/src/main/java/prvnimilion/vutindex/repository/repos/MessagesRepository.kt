@@ -2,6 +2,7 @@ package prvnimilion.vutindex.repository.repos
 
 import prvnimilion.vutindex.repository.security.PreferenceProvider
 import prvnimilion.vutindex.webscraper.scrapers.MessagesScraper
+import timber.log.Timber
 
 class MessagesRepository(
     private val messagesScraper: MessagesScraper,
@@ -17,10 +18,13 @@ class MessagesRepository(
     }
 
     fun isNewMessage(): Boolean {
+        Timber.tag("VutIndexWorker").d("Searching for new messages")
         val newMsgTitle = messagesScraper.checkNewMessages()
         if (!newMsgTitle.isNullOrEmpty()) {
             val lastMsgTitle = getLastMessage()
             if (newMsgTitle != lastMsgTitle) {
+                Timber.tag("VutIndexWorker").d("New message!")
+
                 setLastMessage(newMsgTitle)
                 return lastMsgTitle != ""
             }

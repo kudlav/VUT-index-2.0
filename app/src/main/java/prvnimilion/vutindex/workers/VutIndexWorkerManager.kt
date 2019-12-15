@@ -10,19 +10,21 @@ class VutIndexWorkerManager {
     companion object {
         fun startServices(minutes: Long) {
             Timber.tag("VutIndexWorker").d("Worker has been scheduled for: $minutes minutes")
-            val indexWorkRequest =
-                PeriodicWorkRequest.Builder(IndexWorker::class.java, minutes, TimeUnit.MINUTES)
+            val notificationWorkRequest =
+                PeriodicWorkRequest.Builder(
+                    NotificationWorker::class.java,
+                    minutes,
+                    TimeUnit.MINUTES
+                )
                     .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
                     .build()
             WorkManager.getInstance(BaseApplication.applicationContext())
-                .enqueueUniquePeriodicWork("VutIndexWorker-index", ExistingPeriodicWorkPolicy.KEEP, indexWorkRequest).result.toString()
+                .enqueueUniquePeriodicWork(
+                    "VutIndexWorker-notifications",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    notificationWorkRequest
+                ).result.toString()
 
-            val messagesWorkRequest =
-                PeriodicWorkRequest.Builder(MessageWorker::class.java, minutes, TimeUnit.MINUTES)
-                    .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
-                    .build()
-            WorkManager.getInstance(BaseApplication.applicationContext())
-                .enqueueUniquePeriodicWork("VutIndexWorker-messages", ExistingPeriodicWorkPolicy.KEEP, messagesWorkRequest).result.toString()
         }
 
         fun stopServices() {

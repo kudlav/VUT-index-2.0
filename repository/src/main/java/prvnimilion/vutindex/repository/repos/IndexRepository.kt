@@ -18,6 +18,7 @@ import kotlin.random.Random
 class IndexRepository(private val indexScraper: IndexScraper, private val indexDao: IndexDao) {
 
     suspend fun getIndex(): Index? {
+        Timber.tag("VutIndexWorker").d("Getting index from the network")
         var index: Index? = null
         try {
             index = indexScraper.getIndex()
@@ -29,6 +30,8 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
     }
 
     suspend fun getIndexFromDb(): Index? {
+        Timber.tag("VutIndexWorker").d("Getting index from DB")
+
         val semesters = mutableListOf<Semester>()
         indexDao.getAllSemesters().forEach { semesterEntity ->
 
@@ -67,6 +70,7 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
         if (index == null) return
         clearDb()
 
+        Timber.tag("VutIndexWorker").d("Saving index to DB")
         index.semesters.forEach { semester ->
             var subjectCount = 0
 
@@ -98,11 +102,13 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
     }
 
     suspend fun clearDb() {
+        Timber.tag("VutIndexWorker").d("Clearing DB")
         indexDao.deleteAllSubjects()
         indexDao.deleteAllSemesters()
     }
 
     suspend fun compareIndexes(coroutineScope: CoroutineScope): Difference? {
+        Timber.tag("VutIndexWorker").d("CompareIndexes")
         var newIndex: Index? = null
         var oldIndex: Index? = null
         //Calls have to be in this exact order
@@ -110,24 +116,22 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
             oldIndex = getIndexFromDb()
         }
         job.join()
+        Timber.tag("VutIndexWorker").d("Got Index From DB")
         val job2 = coroutineScope.launch {
             newIndex = getIndex()
         }
         job2.join()
+        Timber.tag("VutIndexWorker").d("Got Index From the network")
 
         if (oldIndex == null || newIndex == null) return null
 
-        Timber.d("GOT both indexes, starting to compare them")
+        Timber.tag("VutIndexWorker").d("Got both indexes, comparing them")
         if (oldIndex!!.semesters.size == newIndex!!.semesters.size) {
             for (i in 0 until oldIndex!!.semesters.size) {
                 if (oldIndex!!.semesters[i] == newIndex!!.semesters[i]) {
                     for (j in 0 until oldIndex!!.semesters[i].subjects.size) {
                         val oldSubject = oldIndex!!.semesters[i].subjects[j]
                         val newSubject = newIndex!!.semesters[i].subjects[j]
-
-//                        if(j == 0 && i == 0) {
-//                            oldSubject.points = Random.nextInt(100).toString()
-//                        }
 
                         when {
                             oldSubject.passed != newSubject.passed -> return Difference(
