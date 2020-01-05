@@ -16,8 +16,8 @@ android {
         applicationId "prvnimilion.VUTIndex"
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
-        versionCode 33
-        versionName "2.0.8"
+        versionCode 34
+        versionName "2.0.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

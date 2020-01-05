@@ -32,10 +32,7 @@ class VutIndexNotificationManager {
         val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
 
         val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.ACHIEVEMENT_ID, difference.differenceType.toString())
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Notification showed!")
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "notification")
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT, bundle)
+        firebaseAnalytics.logEvent(difference.differenceType.toString(), bundle)
 
         val intent = Intent(context, HomeActivity::class.java)
         intent.flags = FLAG_ACTIVITY_NEW_TASK and FLAG_ACTIVITY_CLEAR_TASK

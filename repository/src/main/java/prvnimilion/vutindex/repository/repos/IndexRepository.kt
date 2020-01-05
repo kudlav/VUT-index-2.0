@@ -99,6 +99,7 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
 
             indexDao.insert(SemesterEntity(0, semester.semesterId, semester.header, subjectCount))
         }
+        Timber.tag("VutIndexWorker").d("Done saving index to DB")
     }
 
     suspend fun clearDb() {
@@ -109,6 +110,10 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
 
     suspend fun compareIndexes(coroutineScope: CoroutineScope): Difference? {
         Timber.tag("VutIndexWorker").d("CompareIndexes")
+
+        //Only for testing purposes
+        //mockData()
+
         var newIndex: Index? = null
         var oldIndex: Index? = null
         //Calls have to be in this exact order
@@ -128,10 +133,13 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
         Timber.tag("VutIndexWorker").d("Got both indexes, comparing them")
         if (oldIndex!!.semesters.size == newIndex!!.semesters.size) {
             for (i in 0 until oldIndex!!.semesters.size) {
-                if (oldIndex!!.semesters[i] == newIndex!!.semesters[i]) {
+                if (oldIndex!!.semesters[i].subjects.size == newIndex!!.semesters[i].subjects.size) {
                     for (j in 0 until oldIndex!!.semesters[i].subjects.size) {
                         val oldSubject = oldIndex!!.semesters[i].subjects[j]
                         val newSubject = newIndex!!.semesters[i].subjects[j]
+
+                        Timber.tag("VutIndexWorker")
+                            .e("old: ${oldSubject.shortName}: ${oldSubject.points} --- new: ${newSubject.shortName}: ${newSubject.points}")
 
                         when {
                             oldSubject.passed != newSubject.passed -> return Difference(
@@ -159,5 +167,21 @@ class IndexRepository(private val indexScraper: IndexScraper, private val indexD
             }
         }
         return null
+    }
+
+    private suspend fun mockData() {
+        try {
+            Timber.tag("VutIndexWorker").d("Mocking data starts!___________________________________")
+            val index = getIndexFromDb()
+            val rand = Random.nextInt(100).toString()
+            Timber.tag("VutIndexWorker").d("putting $rand points into the database")
+            index!!.semesters[0].subjects[0].points = rand
+            saveIndexToDb(index)
+            Timber.tag("VutIndexWorker").d("Mocking data ends!___________________________________")
+        } catch (e: Exception)
+        {
+            Timber.tag("VutIndexWorker").d("Mocking data ends with error: $e !______________")
+        }
+
     }
 }
