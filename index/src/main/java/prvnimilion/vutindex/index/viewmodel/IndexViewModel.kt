@@ -41,9 +41,7 @@ class IndexViewModel(private val repository: IndexRepository) : ViewModel() {
             index?.semesters?.forEach { semester ->
                 semesterData.addAll(convertSemesterToFeedModel(semester))
             }
-            if (semesterData.size > 0) {
-                dataSet.postValue(semesterData)
-            }
+            dataSet.postValue(semesterData)
         }
     }
 

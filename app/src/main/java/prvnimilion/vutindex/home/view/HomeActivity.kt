@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.home_screen.*
+import kotlinx.android.synthetic.main.login_screen.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import prvnimilion.vutindex.BaseActivity
 import prvnimilion.vutindex.R
@@ -84,15 +86,19 @@ class HomeActivity : BaseActivity() {
         }
         indexViewModel.getIndex()
         indexViewModel.dataSet.observe(this, Observer {
-            if (it == null) return@Observer
+            if (it == null)
+                Snackbar.make(app_icon, getString(R.string.index_error_download), Snackbar.LENGTH_SHORT).show()
 
             if (recyclerView.adapter == null) {
-                recyclerView.adapter = IndexAdapter(this, it)
+                if (it != null) {
+                    recyclerView.adapter = IndexAdapter(this, it)
+                }
                 progressBar.visibility = View.GONE
-
             } else {
-                (recyclerView.adapter as IndexAdapter).updateDataSet(it)
-                recyclerView.adapter?.notifyDataSetChanged()
+                if (it != null) {
+                    (recyclerView.adapter as IndexAdapter).updateDataSet(it)
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
                 indexView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).isRefreshing =
                     false
             }

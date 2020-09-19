@@ -20,6 +20,7 @@
     <string name="index.credits">Credits:</string>
     <string name="index.term">Term:</string>
     <string name="index.credit.given">Credit:</string>
+    <string name="index.error.download">Unable to get data.</string>
 
     <!-- Menu -->
     <string name="menu.user.loading">Loading…</string>
