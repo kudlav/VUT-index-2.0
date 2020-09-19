@@ -21,7 +21,10 @@
     <string name="index.credit.given">Zápočet:</string>
 
     <!-- Menu -->
+    <string name="menu.user.loading">Načítám…</string>
     <string name="menu.user.credit.text">Zůstatek na ISIC:</string>
+    <string name="menu.user.health.text">Prohlášení o zdravotním stavu:</string>
+    <string name="menu.user.health.button">Podepsat</string>
     <string name="menu.logout.button.text">Odhlásit se</string>
 
     <string name="termsAndConditions">

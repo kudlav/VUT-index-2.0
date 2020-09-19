@@ -5,3 +5,5 @@ package prvnimilion.vutindex.webscraper.util
     const val REQUEST_URL = "https://www.vutbr.cz/login/in"
     const val INTRA_URL = "https://www.vutbr.cz/intra"
     const val KAM_URL = "https://www.vutbr.cz/external/kamb_redirect.php"
+    const val HEALTH_GET_URL = "https://www.vutbr.cz/studis/student.phtml?sn=prohlaseni_studenta"
+    const val HEALTH_SIGN_URL = "https://www.vutbr.cz/studis/student.phtml?sn=prohlaseni_studenta&podepsat=2"

@@ -104,10 +104,22 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun showMenuTab() {
+        val tvUserCredit: TextView = menuView.findViewById(R.id.user_credit)
+        val tvHealthState: TextView = menuView.findViewById(R.id.user_health_state)
+
+        tvUserCredit.text = getString(R.string.menu_user_loading)
+        tvHealthState.text = getString(R.string.menu_user_loading)
+
         menuViewModel.getIsicCredit()
+        menuViewModel.getHealthDeclarationState()
 
         menuView.findViewById<TextView>(R.id.logout_button).setOnClickListener {
             menuViewModel.logoutUser()
+        }
+
+        menuView.findViewById<TextView>(R.id.health_sign_button).setOnClickListener {
+            tvHealthState.text = getString(R.string.menu_user_loading)
+            menuViewModel.signHealthDeclaration()
         }
 
         menuViewModel.userLoggedOut.observe(this, Observer {
@@ -119,7 +131,11 @@ class HomeActivity : BaseActivity() {
         })
 
         menuViewModel.userCredit.observe(this, Observer {
-            menuView.findViewById<TextView>(R.id.user_credit).text = it
+            tvUserCredit.text = it
+        })
+
+        menuViewModel.userHealth.observe(this, Observer {
+            tvHealthState.text = it
         })
     }
 
