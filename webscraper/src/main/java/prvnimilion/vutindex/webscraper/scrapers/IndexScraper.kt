@@ -24,7 +24,6 @@ class IndexScraper(private val vutCookieStore: VutCookieStore) {
                 indexResponse = Jsoup.connect(INDEX_URL)
                     .followRedirects(true)
                     .method(Connection.Method.GET)
-                    .timeout(10 * 1000)
                     .cookies(cookies)
                     .execute()
             } catch (e: Exception) {
