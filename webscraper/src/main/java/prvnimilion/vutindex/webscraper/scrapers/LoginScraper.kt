@@ -99,7 +99,6 @@ class LoginScraper(private val vutCookieStore: VutCookieStore) {
 
             val index = Jsoup.connect(INDEX_URL)
                 .followRedirects(true)
-                .timeout(10 * 1000)
                 .cookies(cookies)
                 .execute()
 

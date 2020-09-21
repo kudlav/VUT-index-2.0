@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.home_screen.*
+import kotlinx.android.synthetic.main.login_screen.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import prvnimilion.vutindex.BaseActivity
 import prvnimilion.vutindex.R
@@ -84,15 +86,19 @@ class HomeActivity : BaseActivity() {
         }
         indexViewModel.getIndex()
         indexViewModel.dataSet.observe(this, Observer {
-            if (it == null) return@Observer
+            if (it == null)
+                Snackbar.make(app_icon, getString(R.string.index_error_download), Snackbar.LENGTH_SHORT).show()
 
             if (recyclerView.adapter == null) {
-                recyclerView.adapter = IndexAdapter(this, it)
+                if (it != null) {
+                    recyclerView.adapter = IndexAdapter(this, it)
+                }
                 progressBar.visibility = View.GONE
-
             } else {
-                (recyclerView.adapter as IndexAdapter).updateDataSet(it)
-                recyclerView.adapter?.notifyDataSetChanged()
+                if (it != null) {
+                    (recyclerView.adapter as IndexAdapter).updateDataSet(it)
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
                 indexView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).isRefreshing =
                     false
             }
@@ -104,10 +110,22 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun showMenuTab() {
+        val tvUserCredit: TextView = menuView.findViewById(R.id.user_credit)
+        val tvHealthState: TextView = menuView.findViewById(R.id.user_health_state)
+
+        tvUserCredit.text = getString(R.string.menu_user_loading)
+        tvHealthState.text = getString(R.string.menu_user_loading)
+
         menuViewModel.getIsicCredit()
+        menuViewModel.getHealthDeclarationState()
 
         menuView.findViewById<TextView>(R.id.logout_button).setOnClickListener {
             menuViewModel.logoutUser()
+        }
+
+        menuView.findViewById<TextView>(R.id.health_sign_button).setOnClickListener {
+            tvHealthState.text = getString(R.string.menu_user_loading)
+            menuViewModel.signHealthDeclaration()
         }
 
         menuViewModel.userLoggedOut.observe(this, Observer {
@@ -119,7 +137,11 @@ class HomeActivity : BaseActivity() {
         })
 
         menuViewModel.userCredit.observe(this, Observer {
-            menuView.findViewById<TextView>(R.id.user_credit).text = it
+            tvUserCredit.text = it
+        })
+
+        menuViewModel.userHealth.observe(this, Observer {
+            tvHealthState.text = it
         })
     }
 

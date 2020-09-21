@@ -17,7 +17,6 @@ class IsicCreditScraper(private val vutCookieStore: VutCookieStore) {
                 creditResponse = Jsoup.connect(KAM_URL)
                     .followRedirects(true)
                     .method(Connection.Method.GET)
-                    .timeout(10 * 1000)
                     .cookies(cookies)
                     .execute()
             } catch (e: Exception) {

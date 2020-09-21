@@ -19,9 +19,13 @@
     <string name="index.credits">Kredity:</string>
     <string name="index.term">Termín:</string>
     <string name="index.credit.given">Zápočet:</string>
+    <string name="index.error.download">Nepodařilo se získat data.</string>
 
     <!-- Menu -->
+    <string name="menu.user.loading">Načítám…</string>
     <string name="menu.user.credit.text">Zůstatek na ISIC:</string>
+    <string name="menu.user.health.text">Prohlášení o zdravotním stavu:</string>
+    <string name="menu.user.health.button">Podepsat</string>
     <string name="menu.logout.button.text">Odhlásit se</string>
 
     <string name="termsAndConditions">

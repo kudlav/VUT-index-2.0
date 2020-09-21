@@ -17,7 +17,6 @@ class MessagesScraper(private val vutCookieStore: VutCookieStore) {
                 messagesResponse = Jsoup.connect(INTRA_URL)
                     .followRedirects(true)
                     .method(Connection.Method.GET)
-                    .timeout(10 * 1000)
                     .cookies(cookies)
                     .execute()
             } catch (e: Exception) {

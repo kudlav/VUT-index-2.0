@@ -13,7 +13,7 @@ val viewModelsModule = module {
 
     viewModel { SplashViewModel(get()) }
     viewModel { LoginViewModel(get()) }
-    viewModel { MenuViewModel(get(), get(), get()) }
+    viewModel { MenuViewModel(get(), get(), get(), get()) }
     viewModel { SystemViewModel(get()) }
     viewModel { HomeViewModel() }
 

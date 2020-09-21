@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+        android:width="1dp"
+        android:color="@color/tabbarMenuColor" />
+
+    <corners android:radius="8dp"/>
+
+    <padding
+        android:left="@dimen/spacing_2"
+        android:top="@dimen/spacing_2"
+        android:right="@dimen/spacing_2"
+        android:bottom="@dimen/spacing_2" />
+</shape>

@@ -20,9 +20,13 @@
     <string name="index.credits">Credits:</string>
     <string name="index.term">Term:</string>
     <string name="index.credit.given">Credit:</string>
+    <string name="index.error.download">Unable to get data.</string>
 
     <!-- Menu -->
+    <string name="menu.user.loading">Loading…</string>
     <string name="menu.user.credit.text">ISIC balance:</string>
+    <string name="menu.user.health.text">Declaration of health:</string>
+    <string name="menu.user.health.button">Sign</string>
     <string name="menu.logout.button.text">Log Out</string>
 
     <string name="termsAndConditions">
