@@ -20,8 +20,9 @@ class MenuViewModel(
 ) : ViewModel() {
 
     val userLoggedOut: MutableLiveData<Boolean> = MutableLiveData()
-    val userCredit: MutableLiveData<String> = MutableLiveData()
-    val userHealth: MutableLiveData<String> = MutableLiveData()
+    val userCredit: MutableLiveData<String?> = MutableLiveData()
+    val userHealth: MutableLiveData<String?> = MutableLiveData()
+    val userHealthSignError: MutableLiveData<Boolean> = MutableLiveData()
 
     fun logoutUser() {
         VutIndexWorkerManager.stopServices()
@@ -47,7 +48,11 @@ class MenuViewModel(
 
     fun signHealthDeclaration() {
         viewModelScope.launch(Dispatchers.IO) {
-            userHealth.postValue(healthDeclareRepository.signDeclaration())
+            val result: String? = healthDeclareRepository.signDeclaration()
+            if (result != null)
+                userHealth.postValue(result)
+            else
+                userHealthSignError.postValue(true)
         }
     }
 }

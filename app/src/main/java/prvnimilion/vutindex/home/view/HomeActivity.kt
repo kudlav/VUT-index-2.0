@@ -137,11 +137,15 @@ class HomeActivity : BaseActivity() {
         })
 
         menuViewModel.userCredit.observe(this, Observer {
-            tvUserCredit.text = it
+            tvUserCredit.text = it ?: getString(R.string.menu_error_download)
         })
 
         menuViewModel.userHealth.observe(this, Observer {
-            tvHealthState.text = it
+            tvHealthState.text = it ?: getString(R.string.menu_error_download)
+        })
+
+        menuViewModel.userHealthSignError.observe(this, Observer {
+            if (it) tvHealthState.text = getString(R.string.menu_error_sign)
         })
     }
 

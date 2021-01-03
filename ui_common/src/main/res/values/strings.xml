@@ -27,6 +27,8 @@
     <string name="menu.user.health.text">Prohlášení o zdravotním stavu:</string>
     <string name="menu.user.health.button">Podepsat</string>
     <string name="menu.logout.button.text">Odhlásit se</string>
+    <string name="menu.error.download">Nepodařilo se získat data.</string>
+    <string name="menu.error.sign">Prohlášení se nepodařilo podepsat.</string>
 
     <string name="termsAndConditions">
         TruzzyApps vyvinuli bezplatnou aplikaci VUT Index. Tato služba je poskytována TruzzyApps bezplatně.

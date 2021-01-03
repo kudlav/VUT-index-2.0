@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="36dp"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.VutIndex.Label.Bold"
         android:textSize="48sp"
         tools:text="129 Kč" />

@@ -28,6 +28,8 @@
     <string name="menu.user.health.text">Declaration of health:</string>
     <string name="menu.user.health.button">Sign</string>
     <string name="menu.logout.button.text">Log Out</string>
+    <string name="menu.error.download">Unable to get data.</string>
+    <string name="menu.error.sign">Unable to sign declaration of health.</string>
 
     <string name="termsAndConditions">
         TruzzyApps built the BUT Index app as a Free app. This SERVICE is provided by TruzzyApps at no cost and is intended for use as is.
