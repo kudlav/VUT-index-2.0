@@ -75,7 +75,8 @@ class HealthDeclareScraper(private val vutCookieStore: VutCookieStore) {
     }
 
     private fun parseNonce(doc: Document) {
-        nonce = doc.getElementById("xs_prohlaseni__o__bezinfekcnosti__2")?.attr("value") ?: ""
+        val element = doc.getElementById("xs_prohlaseni__o__bezinfekcnosti__2")
+        if (element != null) nonce = element.attr("value")
     }
 
 }
