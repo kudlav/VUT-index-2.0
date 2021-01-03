@@ -2,20 +2,22 @@ package prvnimilion.vutindex.webscraper.scrapers
 
 import org.jsoup.Connection
 import org.jsoup.Jsoup
-import prvnimilion.vutindex.webscraper.util.HEALTH_GET_URL
-import prvnimilion.vutindex.webscraper.util.HEALTH_SIGN_URL
+import org.jsoup.nodes.Document
+import prvnimilion.vutindex.webscraper.util.HEALTH_URL
 import prvnimilion.vutindex.webscraper.util.VutCookieStore
 import timber.log.Timber
 import java.lang.Exception
 
 class HealthDeclareScraper(private val vutCookieStore: VutCookieStore) {
 
+    private var nonce: String = ""
+
     fun getDeclarationState(): String? {
         try {
             val cookies = vutCookieStore.loadCookies()
             val healthResponse: Connection.Response?
             try {
-                healthResponse = Jsoup.connect(HEALTH_GET_URL)
+                healthResponse = Jsoup.connect(HEALTH_URL)
                     .followRedirects(true)
                     .method(Connection.Method.GET)
                     .timeout(30 * 1000)
@@ -28,6 +30,7 @@ class HealthDeclareScraper(private val vutCookieStore: VutCookieStore) {
             vutCookieStore.saveCookies(cookies)
 
             val healthDoc = healthResponse.parse()
+            parseNonce(healthDoc)
             val health = healthDoc.getElementsByClass("alert-text")
             return health.text()
         } catch (e: Exception) {
@@ -37,13 +40,21 @@ class HealthDeclareScraper(private val vutCookieStore: VutCookieStore) {
     }
 
     fun signDeclaration(): String? {
+        if (nonce.isEmpty()) {
+            // Try to get nonce if there is no nonce from previous query
+            getDeclarationState()
+            if (nonce.isEmpty()) return null
+        }
         try {
             val cookies = vutCookieStore.loadCookies()
             val healthResponse: Connection.Response?
             try {
-                healthResponse = Jsoup.connect(HEALTH_SIGN_URL)
+                healthResponse = Jsoup.connect(HEALTH_URL)
+                    .method(Connection.Method.POST)
+                    .data("formID", "prohlaseni-o-bezinfekcnosti-2")
+                    .data("xs_prohlaseni__o__bezinfekcnosti__2", nonce)
+                    .data("btnPodepsat-2", "1")
                     .followRedirects(true)
-                    .method(Connection.Method.GET)
                     .timeout(30 * 1000)
                     .cookies(cookies)
                     .execute()
@@ -54,12 +65,17 @@ class HealthDeclareScraper(private val vutCookieStore: VutCookieStore) {
             vutCookieStore.saveCookies(cookies)
 
             val healthDoc = healthResponse.parse()
+            parseNonce(healthDoc)
             val health = healthDoc.getElementsByClass("alert-text").first()
             return health.text()
         } catch (e: Exception) {
             Timber.e(e.toString())
             return null
         }
+    }
+
+    private fun parseNonce(doc: Document) {
+        nonce = doc.getElementById("xs_prohlaseni__o__bezinfekcnosti__2")?.attr("value") ?: ""
     }
 
 }
