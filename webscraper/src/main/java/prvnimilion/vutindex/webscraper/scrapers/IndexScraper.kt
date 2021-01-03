@@ -3,7 +3,6 @@ package prvnimilion.vutindex.webscraper.scrapers
 import android.annotation.SuppressLint
 import org.jsoup.Connection
 import org.jsoup.Jsoup
-import org.jsoup.select.Elements
 import prvnimilion.vutindex.ui_common.models.Index
 import prvnimilion.vutindex.ui_common.models.Semester
 import prvnimilion.vutindex.ui_common.models.Subject
@@ -34,19 +33,18 @@ class IndexScraper(private val vutCookieStore: VutCookieStore) {
 
             val indexDoc = indexResponse.parse()
 
-            val tableHeaders =
-                indexDoc.getElementsByClass("main-content").first().getElementsByTag("h3")
-                    .eachText()
-
-            val semesterTables = Elements()
-            indexDoc.getElementsByClass("table table-bordered table-middle").map {
-                semesterTables.add(it.getElementsByTag("tbody").first())
-            }
+            val tables = indexDoc.getElementsByClass("main-content").first()
+                .getElementsByClass("table-responsive")
 
             var semesterId = 0
-            var tableIndex = 0
             val semesters = mutableListOf<Semester>()
-            semesterTables.forEach { semesterTable ->
+            tables.forEach { table ->
+                val tableHeader = table.previousElementSibling().text()
+
+                val semesterTable = table
+                    .getElementsByClass("table table-bordered table-middle").first()
+                    .getElementsByTag("tbody").first()
+
                 val tableRows = semesterTable.allElements
 
                 val subjects = mutableListOf<Subject>()
@@ -109,7 +107,7 @@ class IndexScraper(private val vutCookieStore: VutCookieStore) {
                         )
                     }
                 }
-                semesters.add(Semester(semesterId++, tableHeaders[tableIndex++], subjects))
+                semesters.add(Semester(semesterId++, tableHeader, subjects))
             }
             return Index(semesters)
         } catch (e: Exception) {
