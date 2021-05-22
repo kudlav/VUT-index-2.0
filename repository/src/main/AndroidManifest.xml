@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="prvnimilion.vutindex.repository">
+    package="cz.kudlav.vutindex.repository">
 
     <application
         android:allowBackup="true"

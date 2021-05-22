@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <prvnimilion.vutindex.ui_common.customviews.LockableViewPager
+    <cz.kudlav.vutindex.ui_common.customviews.LockableViewPager
         android:id="@+id/home_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
