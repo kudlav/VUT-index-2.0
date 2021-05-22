@@ -11,11 +11,9 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
-import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.core.app.NotificationCompat
-import com.google.firebase.analytics.FirebaseAnalytics
 import prvnimilion.vutindex.home.view.HomeActivity
 import prvnimilion.vutindex.ui_common.enums.DifferenceType
 import prvnimilion.vutindex.ui_common.util.Difference
@@ -28,11 +26,6 @@ class VutIndexNotificationManager {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-
-        val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
-
-        val bundle = Bundle()
-        firebaseAnalytics.logEvent(difference.differenceType.toString(), bundle)
 
         val intent = Intent(context, HomeActivity::class.java)
         intent.flags = FLAG_ACTIVITY_NEW_TASK and FLAG_ACTIVITY_CLEAR_TASK

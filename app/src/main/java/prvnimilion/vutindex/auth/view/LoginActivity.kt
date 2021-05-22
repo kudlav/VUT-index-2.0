@@ -5,21 +5,23 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.login_screen.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import prvnimilion.vutindex.BaseActivity
 import prvnimilion.vutindex.R
 import prvnimilion.vutindex.auth.viewmodel.LoginViewModel
+import prvnimilion.vutindex.databinding.LoginScreenBinding
 import prvnimilion.vutindex.home.view.HomeActivity
 import prvnimilion.vutindex.ui_common.dialogs.PrivacyPolicyPopup
 
 class LoginActivity : BaseActivity() {
 
     private val loginViewModel: LoginViewModel by viewModel()
+    private lateinit var binding: LoginScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_screen)
+        binding = LoginScreenBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onResume() {
@@ -36,19 +38,19 @@ class LoginActivity : BaseActivity() {
             if (it) {
                 startHomeActivity()
             } else {
-                Snackbar.make(app_icon, getString(R.string.login_wrong_password), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.appIcon, getString(R.string.login_wrong_password), Snackbar.LENGTH_SHORT).show()
             }
         })
     }
 
     private fun observeButtons() {
-        login_button.setOnClickListener {
-            if (username_et.text.toString().isNotEmpty() && password_et.text.toString().isNotEmpty()) {
-                loginViewModel.loginUser(username_et.text.toString(), password_et.text.toString())
+        binding.loginButton.setOnClickListener {
+            if (binding.usernameEt.text.toString().isNotEmpty() && binding.passwordEt.text.toString().isNotEmpty()) {
+                loginViewModel.loginUser(binding.usernameEt.text.toString(), binding.passwordEt.text.toString())
                 toggleLoading(true)
             }
         }
-        privacy_policy.setOnClickListener {
+        binding.privacyPolicy.setOnClickListener {
             showPrivacyPolicy()
         }
     }
@@ -60,11 +62,11 @@ class LoginActivity : BaseActivity() {
 
     private fun toggleLoading(isLoading: Boolean) {
         if (isLoading) {
-            loading_background.visibility = View.VISIBLE
-            progress_bar.visibility = View.VISIBLE
+            binding.loadingBackground.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
         } else {
-            loading_background.visibility = View.GONE
-            progress_bar.visibility = View.GONE
+            binding.loadingBackground.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
         }
     }
 
@@ -72,8 +74,8 @@ class LoginActivity : BaseActivity() {
         loginViewModel.getCredentials()
 
         loginViewModel.userCredentials.observe(this, Observer {
-            username_et.setText(it.first)
-            password_et.setText(it.second)
+            binding.usernameEt.setText(it.first)
+            binding.passwordEt.setText(it.second)
         })
     }
 

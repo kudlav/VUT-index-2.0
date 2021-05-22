@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.coroutineScope
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import prvnimilion.vutindex.VutIndexNotificationManager
 import prvnimilion.vutindex.repository.repos.AuthRepository
 import prvnimilion.vutindex.repository.repos.IndexRepository

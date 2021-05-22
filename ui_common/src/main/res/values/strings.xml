@@ -31,9 +31,6 @@
     <string name="menu.error.sign">Prohlášení se nepodařilo podepsat.</string>
 
     <string name="termsAndConditions">
-        TruzzyApps vyvinuli bezplatnou aplikaci VUT Index. Tato služba je poskytována TruzzyApps bezplatně.
-        Tato stránka informuje uživatele ohledně našich podmínek spojených se sběrem a použitím osobních údajů, pokud se rozhodl tuto službu využívat. \n\n
-
         Pokud se rozhodnete využívat tuto službu, pak souhlasíte se sběrem a použitím osobních údajů v souvladu s těmito zásadami. Osobní údaje, které sbíráme, jsou použity pro zdokonalovaní služby.
         V žádném případě nebudou sdíleny s třetí stranou jinak, než je uvedeno v těchto podmínkách. \n\n
 
@@ -41,11 +38,6 @@
 
         Pro lepší zážitek při používání naší služby, můžeme požadovat poskytnutí některých osobních údajů. Údaje, které sbíráme zůstanou uloženy ve vašem zařízení a nejsou námi žádným způsobem sbírány.
         Aplikace využívá služeb třetích stran, které mohou sbírat osobní údaje pro vaši identifikaci. \n\n
-
-        <b>Firebase Analytics</b> \n
-
-        Rádi bychom Vás informovali, že pokud využíváte našich služeb, v případě chyby aplikace sbíráme informace(skrze služby třetích stran) z vašeho zařízení nazvaná "Log Data".
-        Tato "Log Data" mohou obsahovat informace jako adresu internetového protokolu Vašeho zařízení ("IP"), jméno zařízení, verzi operačního systému, nastavení aplikace, čas a datum využívání aplikace a další statistiky. \n\n
 
         <b>Cookies</b> \n
 

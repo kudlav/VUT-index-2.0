@@ -8,40 +8,35 @@
     app:cardElevation="0dp">
 
     <ScrollView
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
         android:overScrollMode="never">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/spacing_2">
 
             <TextView
                 android:id="@+id/header"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_2"
+                android:gravity="center_horizontal"
                 android:text="@string/login.privacy.policy"
-                android:textAppearance="@style/TextAppearance.VutIndex.Title"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textAppearance="@style/TextAppearance.VutIndex.Title" />
 
             <TextView
                 android:id="@+id/text"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_2"
                 android:layout_marginTop="@dimen/spacing_3"
                 android:layout_marginEnd="@dimen/spacing_2"
                 android:text="@string/termsAndConditions"
                 android:textSize="12sp"
-                android:textAlignment="viewStart"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/header" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textAlignment="viewStart" />
+        </LinearLayout>
     </ScrollView>
 </androidx.cardview.widget.CardView>

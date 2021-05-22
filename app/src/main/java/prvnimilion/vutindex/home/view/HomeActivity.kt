@@ -20,12 +20,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.home_screen.*
-import kotlinx.android.synthetic.main.login_screen.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import prvnimilion.vutindex.BaseActivity
 import prvnimilion.vutindex.R
 import prvnimilion.vutindex.auth.view.LoginActivity
+import prvnimilion.vutindex.databinding.HomeScreenBinding
+import prvnimilion.vutindex.databinding.LoginScreenBinding
 import prvnimilion.vutindex.home.HomePagerAdapter
 import prvnimilion.vutindex.home.viewmodel.HomeViewModel
 import prvnimilion.vutindex.index.adapters.IndexAdapter
@@ -43,6 +43,8 @@ class HomeActivity : BaseActivity() {
     private val menuViewModel: MenuViewModel by viewModel()
     private val systemViewModel: SystemViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
+    private lateinit var bindingLogin: LoginScreenBinding
+    private lateinit var bindingHome: HomeScreenBinding
 
     private var shortAnimationDuration: Int = 0
     private var longAnimationDuration: Int = 0
@@ -55,7 +57,9 @@ class HomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.home_screen)
+        bindingLogin = LoginScreenBinding.inflate(layoutInflater)
+        bindingHome = HomeScreenBinding.inflate(layoutInflater)
+        setContentView(bindingHome.root)
 
         shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         longAnimationDuration = shortAnimationDuration * 2
@@ -69,9 +73,9 @@ class HomeActivity : BaseActivity() {
 
         setupWorkers()
 
-        home_tab_layout.selectTab(home_tab_layout.getTabAt(0))
+        bindingHome.homeTabLayout.selectTab(bindingHome.homeTabLayout.getTabAt(0))
         //disables swipe
-        home_view_pager.swipeLocked = true
+        bindingHome.homeViewPager.swipeLocked = true
     }
 
     private fun showIndexTab() {
@@ -87,7 +91,7 @@ class HomeActivity : BaseActivity() {
         indexViewModel.getIndex()
         indexViewModel.dataSet.observe(this, Observer {
             if (it == null)
-                Snackbar.make(app_icon, getString(R.string.index_error_download), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(bindingLogin.appIcon, getString(R.string.index_error_download), Snackbar.LENGTH_SHORT).show()
 
             if (recyclerView.adapter == null) {
                 if (it != null) {
@@ -210,18 +214,18 @@ class HomeActivity : BaseActivity() {
         )
 
         val homePagerAdapter = HomePagerAdapter(this, views, names, icons, colors)
-        home_view_pager.adapter = homePagerAdapter
-        home_view_pager.offscreenPageLimit = 3
-        home_tab_layout.setupWithViewPager(home_view_pager)
+        bindingHome.homeViewPager.adapter = homePagerAdapter
+        bindingHome.homeViewPager.offscreenPageLimit = 3
+        bindingHome.homeTabLayout.setupWithViewPager(bindingHome.homeViewPager)
 
-        for (i in 0 until home_tab_layout.tabCount) {
-            val tab = home_tab_layout.getTabAt(i)
+        for (i in 0 until bindingHome.homeTabLayout.tabCount) {
+            val tab = bindingHome.homeTabLayout.getTabAt(i)
             tab?.customView = homePagerAdapter.getTabView(i)
         }
     }
 
     private fun setupTabClickListeners() {
-        home_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        bindingHome.homeTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 if (!homeViewModel.tabLayoutInitialized) {
                     cancelAllSelected()
@@ -272,8 +276,8 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun cancelAllSelected() {
-        for (i in 0..home_tab_layout.tabCount) {
-            val tab = home_tab_layout.getTabAt(i)
+        for (i in 0..bindingHome.homeTabLayout.tabCount) {
+            val tab = bindingHome.homeTabLayout.getTabAt(i)
             tab?.customView?.findViewById<MaterialButton>(R.id.tab_button_active)?.visibility =
                 View.INVISIBLE
             tab?.customView?.findViewById<ImageView>(R.id.tab_button_idle)?.apply {
@@ -286,12 +290,12 @@ class HomeActivity : BaseActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(POSITION, home_tab_layout.selectedTabPosition)
+        outState.putInt(POSITION, bindingHome.homeTabLayout.selectedTabPosition)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        home_view_pager.currentItem = savedInstanceState.getInt(POSITION)
+        bindingHome.homeViewPager.currentItem = savedInstanceState.getInt(POSITION)
     }
 
     override fun onRequestPermissionsResult(

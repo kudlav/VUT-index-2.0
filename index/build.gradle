@@ -1,23 +1,25 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 apply from: '../dependency_versions.gradle'
 
 android {
     compileSdkVersion target_sdk_version
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
 }
@@ -27,7 +29,7 @@ dependencies {
     implementation project(":ui_common")
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     implementation "androidx.appcompat:appcompat:$androidx_appcompact_version"
     implementation "androidx.core:core-ktx:$androidx_core_ktx"
@@ -42,15 +44,11 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$androidx_swipe_refresh_version"
     implementation "com.google.android.material:material:$androidx_material"
 
-    implementation "org.koin:koin-android-scope:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "io.insert-koin:koin-android-scope:$koin_version"
+    implementation "io.insert-koin:koin-android-viewmodel:$koin_version"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     implementation "com.jakewharton.timber:timber:$timber_version"
-
-    testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "androidx.test:runner:$test_runner_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 }
