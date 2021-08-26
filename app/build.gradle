@@ -15,8 +15,8 @@ android {
         applicationId "cz.kudlav.VUTIndex"
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
-        versionCode 35
-        versionName "2.1.0"
+        versionCode 36
+        versionName "2.1.1"
     }
     buildTypes {
         release {
