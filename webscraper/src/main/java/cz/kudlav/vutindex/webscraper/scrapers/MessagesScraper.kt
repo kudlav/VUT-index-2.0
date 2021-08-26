@@ -28,7 +28,7 @@ class MessagesScraper(private val vutCookieStore: VutCookieStore) {
             val messagesDoc = messagesResponse.parse()
             val firstMsg =
                 messagesDoc.getElementsByClass("table table-striped table-bordered").first()
-            firstMsg.child(1).child(0).child(0).child(0).text()
+            firstMsg?.child(1)?.child(0)?.child(0)?.child(0)?.text()
         } catch (e: Exception) {
             Timber.e(e.toString())
             null

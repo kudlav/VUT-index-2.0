@@ -82,8 +82,7 @@ class SystemViewModel(private val repository: AuthRepository) : ViewModel() {
 
     fun setupDownloadListener(
         webView: WebView,
-        downloadManager: DownloadManager,
-        hasStoragePermission: () -> Boolean
+        downloadManager: DownloadManager
     ) {
         webView.setDownloadListener { url12, userAgent, contentDisposition, mimeType, _ ->
             this.url12 = url12
@@ -91,9 +90,7 @@ class SystemViewModel(private val repository: AuthRepository) : ViewModel() {
             this.contentDisposition = contentDisposition
             this.mimeType = mimeType
 
-            if (hasStoragePermission()) {
-                downloadFile(downloadManager)
-            }
+            downloadFile(downloadManager)
         }
     }
 
@@ -112,26 +109,6 @@ class SystemViewModel(private val repository: AuthRepository) : ViewModel() {
             URLUtil.guessFileName(url12, contentDisposition, mimeType)
         )
         downloadManager.enqueue(request)
-    }
-
-    private fun goBack(webView: WebView): Boolean {
-        if (webView.url.contains("www.vutbr.cz/?armsgt") || getPreviousUrl(webView).contains("www.vutbr.cz/login")) {
-            return false
-        }
-        if (webView.canGoBack()) {
-            webView.goBack()
-            return true
-        }
-        return false
-    }
-
-    private fun getPreviousUrl(webView: WebView): String {
-        var previousUrl = ""
-        val webBackForwardList = webView.copyBackForwardList()
-        if (webBackForwardList.currentIndex > 0) {
-            previousUrl = webBackForwardList.getItemAtIndex(webBackForwardList.currentIndex - 1).url
-        }
-        return previousUrl
     }
 
     private suspend fun getCredentials(): Triple<String, String, String> {

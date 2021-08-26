@@ -34,21 +34,21 @@ class IndexScraper(private val vutCookieStore: VutCookieStore) {
             val indexDoc = indexResponse.parse()
 
             val tables = indexDoc.getElementsByClass("main-content").first()
-                .getElementsByClass("table-responsive")
+                ?.getElementsByClass("table-responsive")
 
             var semesterId = 0
             val semesters = mutableListOf<Semester>()
-            tables.forEach { table ->
-                val tableHeader = table.previousElementSibling().text()
+            tables?.forEach { table ->
+                val tableHeader = table.previousElementSibling()?.text() ?: ""
 
                 val semesterTable = table
                     .getElementsByClass("table table-bordered table-middle").first()
-                    .getElementsByTag("tbody").first()
+                    ?.getElementsByTag("tbody")?.first()
 
-                val tableRows = semesterTable.allElements
+                val tableRows = semesterTable?.allElements
 
                 val subjects = mutableListOf<Subject>()
-                tableRows.forEach { subject ->
+                tableRows?.forEach { subject ->
                     if (subject.className().contains("pov")) {
                         val parsedData = subject.getElementsByClass("center").eachText()
 

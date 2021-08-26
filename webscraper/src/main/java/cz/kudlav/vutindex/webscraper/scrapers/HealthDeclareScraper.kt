@@ -67,7 +67,7 @@ class HealthDeclareScraper(private val vutCookieStore: VutCookieStore) {
             val healthDoc = healthResponse.parse()
             parseNonce(healthDoc)
             val health = healthDoc.getElementsByClass("alert-text").first()
-            return health.text()
+            return health?.text()
         } catch (e: Exception) {
             Timber.e(e.toString())
             return null

@@ -31,10 +31,6 @@ import cz.kudlav.vutindex.home.viewmodel.HomeViewModel
 import cz.kudlav.vutindex.index.adapters.IndexAdapter
 import cz.kudlav.vutindex.index.viewmodel.IndexViewModel
 import cz.kudlav.vutindex.menu.viewmodel.MenuViewModel
-import cz.kudlav.vutindex.repository.util.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE
-import cz.kudlav.vutindex.repository.util.PermissionsUtil.hasStorageWritePermissions
-import cz.kudlav.vutindex.repository.util.PermissionsUtil.isStorageWritePermissionGranted
-import cz.kudlav.vutindex.repository.util.PermissionsUtil.requestStorageWritePermission
 import cz.kudlav.vutindex.system.viewmodel.SystemViewModel
 
 class HomeActivity : BaseActivity() {
@@ -170,17 +166,10 @@ class HomeActivity : BaseActivity() {
         systemViewModel.setupChromeWebClient(webView)
 
         val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        systemViewModel.setupDownloadListener(webView, downloadManager) {
-            if (hasStorageWritePermissions(this)) {
-                true
-            } else {
-                requestStorageWritePermission(this)
-                false
-            }
-        }
+        systemViewModel.setupDownloadListener(webView, downloadManager)
         systemViewModel.getCookies(webView)
         systemViewModel.getLoginCredentials()
-        systemViewModel.loginCredentials.observe(this, Observer {
+        systemViewModel.loginCredentials.observe(this, {
             systemViewModel.loginIntoSystem(webView)
         })
 
@@ -296,20 +285,6 @@ class HomeActivity : BaseActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         bindingHome.homeViewPager.currentItem = savedInstanceState.getInt(POSITION)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) {
-            if (isStorageWritePermissionGranted(permissions, grantResults)) {
-                val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-                systemViewModel.downloadFile(downloadManager)
-            }
-        }
     }
 
     override fun onBackPressed() {
