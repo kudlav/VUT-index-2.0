@@ -27,13 +27,14 @@ class LoginActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
+        toggleLoading(false)
         fillCredentials()
         observeViewModel()
         observeButtons()
     }
 
     private fun observeViewModel() {
-        loginViewModel.userLoggedIn.observe(this, Observer {
+        loginViewModel.userLoggedIn.observe(this, {
             toggleLoading(false)
             if (it) {
                 startHomeActivity()
@@ -62,10 +63,10 @@ class LoginActivity : BaseActivity() {
 
     private fun toggleLoading(isLoading: Boolean) {
         if (isLoading) {
-            binding.loadingBackground.visibility = View.VISIBLE
+            binding.loginButton.visibility = View.GONE
             binding.progressBar.visibility = View.VISIBLE
         } else {
-            binding.loadingBackground.visibility = View.GONE
+            binding.loginButton.visibility = View.VISIBLE
             binding.progressBar.visibility = View.GONE
         }
     }

@@ -26,8 +26,7 @@
 
         <activity
             android:name="cz.kudlav.vutindex.auth.view.LoginActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="cz.kudlav.vutindex.home.view.HomeActivity"
